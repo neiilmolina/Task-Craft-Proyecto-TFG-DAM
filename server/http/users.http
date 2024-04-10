@@ -1,0 +1,34 @@
+### GET todos los usuarios
+GET http://localhost:1234/users
+
+### GET usuario por ID
+GET http://localhost:1234/users/6BEJ6uhjjJrdfgLhbeFH
+
+### POST de usuarios
+POST http://localhost:1234/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "date": "2024-04-06",
+  "url_image": "https://example.com/image.jpg",
+  "admin": true
+}
+
+
+### PUT para actualizar usuario
+PUT http://localhost:1234/users/6BEJ6uhjjJrdfgLhbeFH
+Content-Type: application/json
+
+{
+  "name": "John Smith",
+  "email": "johnsmith@example.com",
+  "password": "newpassword456",
+  "date": "2025-05-07",
+  "url_image": "https://example.com/newimage.jpg"
+}
+
+### DELETE usuario por ID
+DELETE http://localhost:1234/users/PZOT4soX9kDYF6tw1gUc

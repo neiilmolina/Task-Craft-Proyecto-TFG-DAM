@@ -1,0 +1,30 @@
+### Obtener todos los diarios
+GET http://localhost:1234/diaries
+
+### Obtener todos los diarios de un usuario específico
+GET http://localhost:1234/diaries?user_id=6BEJ6uhjjJrdfgLhbeFH
+
+### Obtener un diario por su ID
+GET http://localhost:1234/diaries/9ZqU6eFgzOQn1xIAP1Hm
+
+### Crear un nuevo diario
+POST http://localhost:1234/diaries
+Content-Type: application/json
+
+{
+  "description": "Mi primer diario",
+  "date": "2024-04-06",
+  "user_id": "6BEJ6uhjjJrdfgLhbeFH"
+}
+
+### Actualizar un diario existente
+PUT http://localhost:1234/diaries/Y56zGSJufrI3U24psxlV
+Content-Type: application/json
+
+{
+  "description": "DiariO actualizado",
+  "date": "2024-04-07"
+}
+
+### Eliminar un diario por su ID
+DELETE http://localhost:1234/diaries/9ZqU6eFgzOQn1xIAP1Hm

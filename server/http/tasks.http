@@ -1,0 +1,32 @@
+### Obtener todas las tareas
+GET http://localhost:1234/tasks
+### Obtener todas las tareas
+GET http://localhost:1234/tasks?user_id=5yExbJuVC3NLrLVjA0e7
+
+### Obtener una tarea por su ID
+GET http://localhost:1234/tasks/fmuDUyscYMN0qyKzmn5y
+
+### Crear una nueva tarea
+POST http://localhost:1234/tasks
+Content-Type: application/json
+
+{
+  "title": "Tarea importante",
+  "description": "Realizar una tarea importante",
+  "completed": false,
+  "date": "2024-04-06",
+  "category": "Tarea",
+  "user_id": "5yExbJuVC3NLrLVjA0e7"
+}
+
+### Actualizar una tarea existente
+PUT http://localhost:1234/tasks/dZQpqLOW0kz3hiXxIMYt
+Content-Type: application/json
+
+{
+  "description": "Completar el informe mensual de ventas y enviarlo por correo electrónico",
+  "completed": true
+}
+
+### Eliminar una tarea por su ID
+DELETE http://localhost:1234/tasks/IvggJP8E9J4e9z7jFKwz
