@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { FIREBASE_AUTH } from "./FirebaseConfig";
-import Login from "./app/screens/Login";
+import Login from "./modules/user/components/Login";
 import List from "./app/screens/List";
 import Details from "./app/screens/Details";
 
