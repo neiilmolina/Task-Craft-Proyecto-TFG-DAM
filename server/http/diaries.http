@@ -1,14 +1,14 @@
 ### Obtener todos los diarios
-GET http://localhost:1234/diaries
+GET http://localhost:2508/diaries
 
 ### Obtener todos los diarios de un usuario específico
-GET http://localhost:1234/diaries?user_id=6BEJ6uhjjJrdfgLhbeFH
+GET http://localhost:2508/diaries?user_id=6BEJ6uhjjJrdfgLhbeFH
 
 ### Obtener un diario por su ID
-GET http://localhost:1234/diaries/9ZqU6eFgzOQn1xIAP1Hm
+GET http://localhost:2508/diaries/9ZqU6eFgzOQn1xIAP1Hm
 
 ### Crear un nuevo diario
-POST http://localhost:1234/diaries
+POST http://localhost:2508/diaries
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Actualizar un diario existente
-PUT http://localhost:1234/diaries/Y56zGSJufrI3U24psxlV
+PUT http://localhost:2508/diaries/Y56zGSJufrI3U24psxlV
 Content-Type: application/json
 
 {
@@ -27,4 +27,4 @@ Content-Type: application/json
 }
 
 ### Eliminar un diario por su ID
-DELETE http://localhost:1234/diaries/9ZqU6eFgzOQn1xIAP1Hm
+DELETE http://localhost:2508/diaries/9ZqU6eFgzOQn1xIAP1Hm

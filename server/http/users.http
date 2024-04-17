@@ -1,11 +1,11 @@
 ### GET todos los usuarios
-GET http://localhost:1234/users
+GET http://localhost:2508/users
 
 ### GET usuario por ID
-GET http://localhost:1234/users/6BEJ6uhjjJrdfgLhbeFH
+GET http://localhost:2508/users/6BEJ6uhjjJrdfgLhbeFH
 
 ### POST de usuarios
-POST http://localhost:1234/users
+POST http://localhost:2508/users
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 
 ### PUT para actualizar usuario
-PUT http://localhost:1234/users/6BEJ6uhjjJrdfgLhbeFH
+PUT http://localhost:2508/users/6BEJ6uhjjJrdfgLhbeFH
 Content-Type: application/json
 
 {
@@ -31,4 +31,4 @@ Content-Type: application/json
 }
 
 ### DELETE usuario por ID
-DELETE http://localhost:1234/users/PZOT4soX9kDYF6tw1gUc
+DELETE http://localhost:2508/users/PZOT4soX9kDYF6tw1gUc

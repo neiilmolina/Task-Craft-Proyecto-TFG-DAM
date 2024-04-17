@@ -16,7 +16,7 @@ export const createApp = ({ userModel, diaryModel, taskModel }) => {
   app.use("/diaries", createDiaryRoute({ diaryModel }))
   app.use("/tasks", createTaskRoute({ taskModel }))
   
-  const PORT = process.env.PORT ?? 1234;
+  const PORT = process.env.PORT ?? 2508;
 
   app.listen(PORT, () => {
     console.log(`Server running in port ${PORT}`);
