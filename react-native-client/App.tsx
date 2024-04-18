@@ -6,6 +6,7 @@ import { FIREBASE_AUTH } from "./FirebaseConfig";
 import Login from "./modules/user/components/Login";
 import List from "./app/screens/List";
 import Details from "./app/screens/Details";
+import AuthNavigator from './modules/user/components/AuthNavigator'; // Asegúrate de importar tu AuthNavigator
 
 const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
@@ -33,21 +34,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <Stack.Screen
-            name="Inside"
-            component={InsideLayout}
-            options={{ headerShown: true }}
-          />
-        ) : (
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
+      {user ? (
+        <InsideLayout /> // Renderiza InsideLayout si hay un usuario autenticado
+      ) : (
+        <AuthNavigator /> // Renderiza AuthNavigator si no hay usuario autenticado
+      )}
     </NavigationContainer>
   );
 }

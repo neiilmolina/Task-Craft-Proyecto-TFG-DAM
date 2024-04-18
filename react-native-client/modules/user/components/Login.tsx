@@ -57,7 +57,8 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   h1:{
-    
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   container: {
     flex: 1,
