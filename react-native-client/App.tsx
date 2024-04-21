@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+
+import { Provider } from "react-redux";
+import { store } from "./store";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import { onAuthStateChanged, User } from "firebase/auth";
 import { FIREBASE_AUTH } from "./FirebaseConfig";
-import Login from "./modules/user/components/Login";
-import List from "./app/screens/List";
-import Details from "./app/screens/Details";
+
+import List from "./modules/tasks/screens/List";
+import Details from "./modules/tasks/screens/Details";
 import AuthNavigator from './modules/user/components/AuthNavigator'; // Asegúrate de importar tu AuthNavigator
 
 const Stack = createNativeStackNavigator();
@@ -33,12 +38,14 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      {user ? (
-        <InsideLayout /> // Renderiza InsideLayout si hay un usuario autenticado
-      ) : (
-        <AuthNavigator /> // Renderiza AuthNavigator si no hay usuario autenticado
-      )}
-    </NavigationContainer>
+    <Provider store={store}> 
+      <NavigationContainer>
+        {user ? (
+          <InsideLayout /> // Renderiza InsideLayout si hay un usuario autenticado
+        ) : (
+          <AuthNavigator /> // Renderiza AuthNavigator si no hay usuario autenticado
+        )}
+      </NavigationContainer>
+    </Provider>
   );
 }

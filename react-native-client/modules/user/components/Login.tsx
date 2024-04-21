@@ -81,11 +81,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000', // Black line
-    marginBottom: 20,
+    width: '100%',
+    marginBottom: 10,
     padding: 10,
-    backgroundColor: '#FFFFFF', // White background
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
   },
   switchText: {
     marginTop: 20,
