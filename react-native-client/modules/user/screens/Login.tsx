@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { YourStackParamList } from './AuthNavigator';
-type LoginScreenNavigationProp = StackNavigationProp<YourStackParamList, 'Login'>;
+import { AuthNavigationParamList } from '../navigation/AuthNavigator';
+type LoginScreenNavigationProp = StackNavigationProp<AuthNavigationParamList, 'Login'>;
 
 interface LoginScreenProps {
   navigation: LoginScreenNavigationProp;
@@ -57,6 +57,7 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   h1:{
+    paddingTop: 40,
     fontSize: 20,
     fontWeight: 'bold',
   },

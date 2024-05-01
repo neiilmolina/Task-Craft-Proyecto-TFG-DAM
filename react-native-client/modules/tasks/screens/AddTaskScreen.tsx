@@ -3,14 +3,33 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
+import { useUserActions } from "../hooks/useTaskActions";
+
+import { StackNavigationProp } from "@react-navigation/stack";
+import { TaskNavigationParamList } from "../navigation/TaskNavigation";
+
+import { format } from "date-fns";
+
+type AddTaskScreenNavigationProp = StackNavigationProp<
+  TaskNavigationParamList,
+  "AddTaskScreen"
+>;
+
+interface AddTaskScreenProps {
+  navigation: AddTaskScreenNavigationProp;
+}
+
 const categories = ["Tarea", "Objetivo", "Evento", "Otros"];
 
-export default function AddTaskScreen() {
+const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
+  const { addNewTask } = useUserActions();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState(categories[0]);
   const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
 
   const showDatePicker = () => {
     setIsDatePickerVisible(true);
@@ -25,17 +44,37 @@ export default function AddTaskScreen() {
     setDate(selectedDate);
   };
 
+  const showTimePicker = () => {
+    setIsTimePickerVisible(true);
+  };
+
+  const hideTimePicker = () => {
+    setIsTimePickerVisible(false);
+  };
+
+  const handleConfirmTime = (selectedTime: Date) => {
+    hideTimePicker();
+    setTime(selectedTime);
+  };
+
+  // Dentro de handleCreateTask
   const handleCreateTask = () => {
-    // Aquí puedes implementar la lógica para crear la tarea con los datos ingresados
+    // Convertir la fecha y hora a objetos Date
+    const taskDate = new Date(date);
+    const taskTime = new Date(time);
+
+    // Crear la nueva tarea con los datos ingresados
     const newTask = {
       title,
       description,
       category,
-      date,
+      // Formatear la fecha y la hora a una cadena en formato ISO 8601
+      date: format(taskDate, "yyyy-MM-dd'T'HH:mm:ss"),
       completed: false,
       user_id: "id_del_usuario", // Aquí deberías obtener el ID del usuario actual
     };
     console.log("Nueva tarea:", newTask);
+    addNewTask(newTask);
     // Aquí podrías enviar la nueva tarea al backend o realizar otras acciones necesarias
   };
 
@@ -61,7 +100,7 @@ export default function AddTaskScreen() {
       <Text style={styles.label}>Categoría:</Text>
       <Picker
         selectedValue={category}
-        onValueChange={(itemValue:string) => setCategory(itemValue)}
+        onValueChange={(itemValue: string) => setCategory(itemValue)}
         style={styles.picker}
       >
         {categories.map((category) => (
@@ -73,18 +112,34 @@ export default function AddTaskScreen() {
       <View style={styles.dateContainer}>
         <Text>{date.toDateString()}</Text>
         <Button title="Seleccionar fecha" onPress={showDatePicker} />
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirmDate}
-          onCancel={hideDatePicker}
-        />
       </View>
+
+      <Text style={styles.label}>Hora:</Text>
+      <View style={styles.dateContainer}>
+        <Text>{time.toLocaleTimeString()}</Text>
+        <Button title="Seleccionar hora" onPress={showTimePicker} />
+      </View>
+
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirmDate}
+        onCancel={hideDatePicker}
+      />
+
+      <DateTimePickerModal
+        isVisible={isTimePickerVisible}
+        mode="time"
+        onConfirm={handleConfirmTime}
+        onCancel={hideTimePicker}
+      />
 
       <Button title="Crear tarea" onPress={handleCreateTask} />
     </View>
   );
-}
+};
+
+export default AddTaskScreen;
 
 const styles = StyleSheet.create({
   container: {

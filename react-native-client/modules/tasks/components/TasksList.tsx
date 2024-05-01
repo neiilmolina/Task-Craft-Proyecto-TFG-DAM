@@ -14,7 +14,7 @@ export function TasksList() {
   } = useUserActions();
 
   return (
-    <View style={styles.container}>
+    <View style={styles.taskContainer}>
     {tasks.map((task) => (
       <View key={task.id} style={styles.task}>
         <Text style={styles.taskText}>{task.title}</Text>
@@ -26,16 +26,17 @@ export function TasksList() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  taskContainer: {
     flex: 1,
     padding: 10,
+    width: "100%"
   },
   task: {
     backgroundColor: '#ffff',
     padding: 20,
     marginVertical: 8,
     borderRadius: 10,
-    borderBlockColor: "#91CEFA"
+    color:"black"
   },
   taskText: {
     fontSize: 16,

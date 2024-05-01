@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { View, TextInput, Button, Text, StyleSheet } from "react-native";
 import { useAuth } from "../hooks/useAuth";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { YourStackParamList } from "./AuthNavigator";
+import { AuthNavigationParamList } from "../navigation/AuthNavigator";
 
-// Asumiendo que YourStackParamList es un tipo definido en otro archivo, aquí lo importamos
+// Asumiendo que AuthNavigationParamList es un tipo definido en otro archivo, aquí lo importamos
 
 type RegisterScreenNavigationProp = StackNavigationProp<
-  YourStackParamList,
+  AuthNavigationParamList,
   "Register"
 >;
 
@@ -77,6 +77,7 @@ const Register: React.FC<RegisterScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   h1: {
+    paddingTop: 40,
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
+    alignItems: 'center',
     backgroundColor: "#FFFFFF", // White card
     margin: 20,
     borderRadius: 10,

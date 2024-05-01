@@ -11,7 +11,9 @@ import { FIREBASE_AUTH } from "./FirebaseConfig";
 
 import List from "./modules/tasks/screens/List";
 import Details from "./modules/tasks/screens/Details";
-import AuthNavigator from './modules/user/components/AuthNavigator'; // Asegúrate de importar tu AuthNavigator
+import AddTaskScreen from "./modules/tasks/screens/AddTaskScreen"; 
+
+import AuthNavigator from "./modules/user/navigation/AuthNavigator"; // Asegúrate de importar tu AuthNavigator
 
 const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
@@ -19,8 +21,16 @@ const InsideStack = createNativeStackNavigator();
 function InsideLayout() {
   return (
     <InsideStack.Navigator>
-      <InsideStack.Screen name="MyTodos" component={List} />
-      <InsideStack.Screen name="Details" component={Details} />
+      <InsideStack.Screen
+        name="Tareas"
+        component={List}
+        options={{ headerShown: false }}
+      />
+      <InsideStack.Screen
+        name="AddTaskScreen"
+        component={AddTaskScreen}
+        options={{ headerShown: false }}
+      />
     </InsideStack.Navigator>
   );
 }
@@ -38,7 +48,7 @@ export default function App() {
   }, []);
 
   return (
-    <Provider store={store}> 
+    <Provider store={store}>
       <NavigationContainer>
         {user ? (
           <InsideLayout /> // Renderiza InsideLayout si hay un usuario autenticado

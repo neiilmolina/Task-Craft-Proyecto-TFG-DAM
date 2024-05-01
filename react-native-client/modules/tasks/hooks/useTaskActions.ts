@@ -19,9 +19,12 @@ export const useUserActions = () => {
     title,
     category,
   }: Task) => {
+    // Convertir la fecha a formato ISO 8601 antes de llamar al action creator
+    const isoDate = new Date(date).toISOString();
+
     dispatch(
       addTask({
-        date,
+        date: isoDate,
         user_id,
         description,
         completed,

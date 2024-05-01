@@ -1,7 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from 'uuid';
+import 'react-native-get-random-values';
 
 export interface Task {
-  date: Date;
+  date: string;
   user_id: string;
   description: string;
   completed: boolean;
@@ -16,7 +18,7 @@ export interface TaskWithId extends Task{
 const INITIAL_STATE: TaskWithId[] = [
   {
     id: "cBrzl0EH0iMEQN8nrjO0",
-    date: new Date(1712361600000), // Date correspondiente a 1712361600 segundos UNIX
+    date: new Date(1712361600000).toISOString(), // Convertir la fecha a string ISO
     user_id: "5yExbJuVC3NLrLVjA0e7",
     description: "Realizar una tarea importante",
     completed: false,
@@ -25,7 +27,7 @@ const INITIAL_STATE: TaskWithId[] = [
   },
   {
     id: "dZQpqLOW0kz3hiXxIMYt",
-    date: new Date(1712361600000), // Date correspondiente a 1712361600 segundos UNIX
+    date: new Date(1712361600000).toISOString(), // Convertir la fecha a string ISO
     user_id: "5yExbJuVC3NLrLVjA0e7",
     title: "Tarea importante",
     category: "Tarea",
@@ -35,7 +37,7 @@ const INITIAL_STATE: TaskWithId[] = [
   },
   {
     id: "gldjWLz8fJDZ4jvX1Tgd",
-    date: new Date(1712361600000), // Date correspondiente a 1712361600 segundos UNIX
+    date: new Date(1712361600000).toISOString(), // Convertir la fecha a string ISO
     user_id: "5yExbJuVC3NLrLVjA0e7",
     description: "Realizar una tarea importante",
     completed: false,
@@ -50,7 +52,7 @@ const tasksSlice = createSlice({
   reducers: {
     // Agregar una nueva tarea
     addTask: (state, action: PayloadAction<Task>) => {
-      const id = crypto.randomUUID();
+      const id = uuidv4();
       state.push({id, ...action.payload});
     },
     // Editar una tarea existente
