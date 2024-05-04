@@ -6,7 +6,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useUserActions } from "../hooks/useTaskActions";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { TaskNavigationParamList } from "../navigation/TaskNavigation";
+import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
 
 import { format } from "date-fns";
 
@@ -87,6 +87,16 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
         onChangeText={setTitle}
         placeholder="Ingrese el título de la tarea"
       />
+      <View style={styles.timeDateContainer}>
+        <View style={styles.dateContainer}>
+          <Text>{date.toDateString()}</Text>
+          <Button title="Fecha" onPress={showDatePicker} />
+        </View>
+        <View style={styles.dateContainer}>
+          <Text>{time.toLocaleTimeString()}</Text>
+          <Button title="Hora" onPress={showTimePicker} />
+        </View>
+      </View>
 
       <Text style={styles.label}>Descripción:</Text>
       <TextInput
@@ -95,6 +105,7 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
         onChangeText={setDescription}
         multiline
         placeholder="Ingrese la descripción de la tarea"
+        textAlignVertical="top"
       />
 
       <Text style={styles.label}>Categoría:</Text>
@@ -107,18 +118,6 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
           <Picker.Item key={category} label={category} value={category} />
         ))}
       </Picker>
-
-      <Text style={styles.label}>Fecha:</Text>
-      <View style={styles.dateContainer}>
-        <Text>{date.toDateString()}</Text>
-        <Button title="Seleccionar fecha" onPress={showDatePicker} />
-      </View>
-
-      <Text style={styles.label}>Hora:</Text>
-      <View style={styles.dateContainer}>
-        <Text>{time.toLocaleTimeString()}</Text>
-        <Button title="Seleccionar hora" onPress={showTimePicker} />
-      </View>
 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -139,12 +138,11 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
   );
 };
 
-export default AddTaskScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    gap: 15,
   },
   label: {
     fontSize: 16,
@@ -152,7 +150,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#1A659E",
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
@@ -163,9 +161,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
   },
-  dateContainer: {
+  timeDateContainer: {
+    marginTop: 9,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  dateContainer: {
+    flexDirection: "column",
     alignItems: "center",
     marginBottom: 10,
   },
 });
+
+export default AddTaskScreen;

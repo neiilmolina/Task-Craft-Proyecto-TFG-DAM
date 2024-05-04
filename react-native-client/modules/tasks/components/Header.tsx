@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { TaskNavigationParamList } from "../navigation/TaskNavigation";
+import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
 
 
 type HeaderNavigationProp = StackNavigationProp<TaskNavigationParamList, "List">;
