@@ -1,6 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from 'uuid';
 import 'react-native-get-random-values';
+import { fetchTasks } from "./initialTasks";
+// import { fetchTasks } from "./initialTasks";
+
+export interface TaskApi {
+    id: string;
+    date: {
+      _seconds: number;
+      _nanoseconds: number;
+    };
+    user_id: string;
+    title: string;
+    category: string;
+    description?: string;
+    completed: boolean;
+  
+}
 
 export interface Task {
   date: string;
@@ -15,36 +31,54 @@ export interface TaskWithId extends Task{
   id: string;
 }
 
-const INITIAL_STATE: TaskWithId[] = [
-  {
-    id: "cBrzl0EH0iMEQN8nrjO0",
-    date: new Date(1712361600000).toISOString(), // Convertir la fecha a string ISO
-    user_id: "5yExbJuVC3NLrLVjA0e7",
-    description: "Realizar una tarea importante",
-    completed: false,
-    title: "Tarea importante",
-    category: "Tarea",
-  },
-  {
-    id: "dZQpqLOW0kz3hiXxIMYt",
-    date: new Date(1712361600000).toISOString(), // Convertir la fecha a string ISO
-    user_id: "5yExbJuVC3NLrLVjA0e7",
-    title: "Tarea importante",
-    category: "Tarea",
-    description:
-      "Completar el informe mensual de ventas y enviarlo por correo electrónico",
-    completed: true,
-  },
-  {
-    id: "gldjWLz8fJDZ4jvX1Tgd",
-    date: new Date(1712361600000).toISOString(), // Convertir la fecha a string ISO
-    user_id: "5yExbJuVC3NLrLVjA0e7",
-    description: "Realizar una tarea importante",
-    completed: false,
-    title: "Tarea importante",
-    category: "Tarea",
-  },
-];
+const INITIAL_STATE: TaskWithId[] = [];
+
+(async () => {
+  try {
+    const url = 'http://192.168.56.1:2508/tasks'; // Reemplaza 'tu_url_aqui' con la URL real
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    // Mapea los datos JSON a objetos TypeScript
+    const tasksApi: TaskApi[] = data.map( (taskApi: TaskApi) => (
+      {
+      id: taskApi.id,
+      date: taskApi.date, // Convertir a string directamente aquí
+      user_id: taskApi.user_id,
+      description: taskApi.description,
+      completed: taskApi.completed,
+      title: taskApi.title,
+      category: taskApi.category
+    }));
+
+    const tasks: TaskWithId[] = tasksApi.map(taskApi => {
+      const { id, date, user_id, description = "", completed, title, category } = taskApi;
+      const dateString = new Date(date._seconds * 1000).toISOString();
+      return { id, date: dateString, user_id, description, completed, title, category };
+    });
+    
+    tasks.forEach(task => {
+      console.log(`Tarea ID: ${task.id}`);
+      console.log(`Tarea: ${task.title}`);
+      console.log(`Descripción: ${task.description}`);
+      console.log(`Completada: ${task.completed}`);
+      console.log(`Fecha: ${task.date}`);
+      console.log(`Usuario ID: ${task.user_id}`);
+      console.log("------------------------");
+    });
+
+
+    // Asigna los datos a INITIAL_STATE después de la resolución de la promesa
+    INITIAL_STATE.push(...tasks);
+  } catch (error) {
+    console.error('Hubo un problema con la operación de búsqueda:', error);
+  }
+})();
 
 const tasksSlice = createSlice({
   name: "tasks",
@@ -53,6 +87,7 @@ const tasksSlice = createSlice({
     // Agregar una nueva tarea
     addTask: (state, action: PayloadAction<Task>) => {
       const id = uuidv4();
+      console.log(id)
       state.push({id, ...action.payload});
     },
     // Editar una tarea existente
@@ -66,24 +101,14 @@ const tasksSlice = createSlice({
     deleteTask: (state, action: PayloadAction<string>) => {
       return state.filter((task) => task.id !== action.payload);
     },
-    // Marcar una tarea como completada
-    completeTask: (state, action: PayloadAction<string>) => {
-      const index = state.findIndex((task) => task.id === action.payload);
-      if (index !== -1) {
-        state[index].completed = true;
-      }
-    },
-    // Marcar una tarea como incompleta
-    incompleteTask: (state, action: PayloadAction<string>) => {
-      const index = state.findIndex((task) => task.id === action.payload);
-      if (index !== -1) {
-        state[index].completed = false;
-      }
-    },
   },
+  
 });
 
+
+
 // Exporta acciones y el reducer
-export const { addTask, editTask, deleteTask, completeTask, incompleteTask } =
+export const { addTask, editTask, deleteTask, } =
   tasksSlice.actions;
 export default tasksSlice.reducer;
+

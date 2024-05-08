@@ -34,7 +34,7 @@ export class UserModel {
 
   static async createUser({ input }) {
     try {
-      const newUserRef = await collection.add( input );
+      const newUserRef = await collection.doc(input.id).set(input);
       return newUserRef.id;
     } catch (error) {
       console.error("Error al crear el usuario:", error);

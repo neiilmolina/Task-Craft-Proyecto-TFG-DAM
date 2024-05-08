@@ -44,7 +44,7 @@ export class TaskModel {
 
   static async createTask({ input }) {
     try {
-      const newTaskRef = await collection.add(input);
+      const newTaskRef = await collection.doc(input.id).set(input);
       return newTaskRef.id;
     } catch (error) {
       console.error("Error creating task:", error);

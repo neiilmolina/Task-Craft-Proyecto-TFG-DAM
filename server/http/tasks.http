@@ -11,6 +11,7 @@ POST http://localhost:2508/tasks
 Content-Type: application/json
 
 {
+  "id":"33e57bce94d4476ab125c8893e52b45a",
   "title": "Tarea importante",
   "description": "Realizar una tarea importante",
   "completed": false,

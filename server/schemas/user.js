@@ -1,6 +1,11 @@
-import z from "zod";
+import { z } from "zod";
 
 const userSchema = z.object({
+  id: z.string().refine((id) => {
+    return isUUID(id); // Validamos el UUID utilizando la función isUUID
+  }, {
+    message: "The id must be a valid UUID"
+  }),
   name: z
     .string()
     .min(1, {
@@ -19,6 +24,12 @@ const userSchema = z.object({
   url_image: z.string().url({ message: "Poster must be a valid URL" }),
   admin: z.boolean(),
 });
+
+// Función para validar UUID utilizando una expresión regular
+function isUUID(uuid) {
+  const uuidRegex = /^[0-9a-fA-F]{8}[0-9a-fA-F]{4}[0-9a-fA-F]{4}[0-9a-fA-F]{4}[0-9a-fA-F]{12}$/;
+  return uuidRegex.test(uuid);
+}
 
 export function validateUser(input) {
   return userSchema.safeParse(input);

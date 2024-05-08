@@ -33,10 +33,10 @@ export class DiaryController {
 
   createDiary = async (req, res) => {
     try {
-      const { description, date, user_id } = req.body;
+      const { id,description, date, user_id } = req.body;
       const parsedDate = new Date(date);
       const result = validateDiary({
-        description, date: parsedDate, user_id,
+        id, description, date: parsedDate, user_id,
       });
 
 

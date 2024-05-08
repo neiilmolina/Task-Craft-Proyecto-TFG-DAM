@@ -24,11 +24,12 @@ export class UserController {
   };
 
   create = async (req, res) => {
-    const { name, email, password, date, url_image, admin } = req.body;
+    const {id, name, email, password, date, url_image, admin } = req.body;
 
     const parsedDate = new Date(date);
 
     const result = validateUser({
+      id,
       name,
       email,
       password,

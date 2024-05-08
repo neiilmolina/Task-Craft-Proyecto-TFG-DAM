@@ -44,7 +44,7 @@ export class DiaryModel {
 
   static async createDiary({ input }) {
     try {
-      const newDiaryRef = await collection.add(input);
+      const newDiaryRef = await collection.doc(input.id).set(input);
       return newDiaryRef.id;
     } catch (error) {
       console.error("Error creating diary:", error);

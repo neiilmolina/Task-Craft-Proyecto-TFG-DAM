@@ -13,7 +13,7 @@ import { format } from "date-fns";
 
 import { Task, TaskWithId } from "../store/slice";
 
-import MyButton from "../../../components/MyButton";
+import MyButton from "../../../app/components/MyButton";
 
 type DetailsScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,

@@ -1,9 +1,8 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Settings from "./modules/user/screens/Settings";
-import ListTaskNavigation from "./modules/tasks/navigation/ListTaskNavigation";
+import Settings from "../../modules/user/screens/Settings";
+import ListTaskNavigation from "../../modules/tasks/navigation/ListTaskNavigation";
 
 const Tab = createBottomTabNavigator();
 

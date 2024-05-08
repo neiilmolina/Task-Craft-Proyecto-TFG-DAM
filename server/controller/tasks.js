@@ -39,10 +39,11 @@ export class TaskController {
 
   createTask = async (req, res) => {
     try {
-      const { title, description, completed, date, category, user_id } =
+      const {id, title, description, completed, date, category, user_id } =
         req.body;
       const parsedDate = new Date(date);
       const result = validateTask({
+        id,
         title,
         description,
         completed,

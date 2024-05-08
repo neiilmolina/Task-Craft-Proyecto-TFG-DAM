@@ -5,16 +5,17 @@ GET http://localhost:2508/diaries
 GET http://localhost:2508/diaries?user_id=6BEJ6uhjjJrdfgLhbeFH
 
 ### Obtener un diario por su ID
-GET http://localhost:2508/diaries/9ZqU6eFgzOQn1xIAP1Hm
+GET http://localhost:2508/diaries/79dc3d04e6d8413697f0bb5dcff2280e
 
 ### Crear un nuevo diario
 POST http://localhost:2508/diaries
 Content-Type: application/json
 
 {
+  "id":"79dc3d04e6d8413697f0bb5dcff2280e",
   "description": "Mi primer diario",
   "date": "2024-04-06",
-  "user_id": "6BEJ6uhjjJrdfgLhbeFH"
+  "user_id": "b7e9c4cd20ef4d7b9a73f9d7dd72f19e"
 }
 
 ### Actualizar un diario existente

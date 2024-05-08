@@ -4,17 +4,13 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { onAuthStateChanged, User } from "firebase/auth";
 import { FIREBASE_AUTH } from "./FirebaseConfig";
 
 import AuthNavigator from "./modules/user/navigation/AuthNavigator"; // Asegúrate de importar tu AuthNavigator
-import TaskNavigation from "./modules/tasks/navigation/ListTaskNavigation";
-import MyTabs from "./Navigation";
+import MyTabs from "./app/Navigation/Navigation";
 
-
-const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -31,6 +27,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
+      {/* <MyTabs/> */}
         {user ? (
           // Renderiza InsideLayout si hay un usuario autenticado
           <MyTabs/>
