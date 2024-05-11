@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isUUID } from "./validations.js"
 
 const diarySchema = z.object({
   id: z.string().refine((id) => {
@@ -18,12 +19,6 @@ const diarySchema = z.object({
     message: "The user_id must be a valid UUID"
   })
 });
-
-// Función para validar UUID utilizando una expresión regular
-function isUUID(uuid) {
-  const uuidRegex = /^[0-9a-fA-F]{8}[0-9a-fA-F]{4}[1-5][0-9a-fA-F]{3}[89abAB][0-9a-fA-F]{3}[0-9a-fA-F]{12}$/;
-  return uuidRegex.test(uuid);
-}
 
 export function validateDiary(input) {
   return diarySchema.safeParse(input);

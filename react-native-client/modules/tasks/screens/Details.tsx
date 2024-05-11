@@ -11,7 +11,7 @@ import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
 
 import { format } from "date-fns";
 
-import { Task, TaskWithId } from "../store/slice";
+import { Task, TaskWithId } from "../store/interfaces";
 
 import MyButton from "../../../app/components/MyButton";
 

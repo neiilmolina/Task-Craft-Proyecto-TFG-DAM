@@ -1,5 +1,5 @@
 import { validateTask, validatePartialTask } from "../schemas/task.js";
-
+import { parseISO } from "date-fns";
 export class TaskController {
   constructor({ taskModel }) {
     this.taskModel = taskModel;
@@ -39,9 +39,9 @@ export class TaskController {
 
   createTask = async (req, res) => {
     try {
-      const {id, title, description, completed, date, category, user_id } =
+      const { id, title, description, completed, date, category, user_id } =
         req.body;
-      const parsedDate = new Date(date);
+      const parsedDate = parseISO(date);
       const result = validateTask({
         id,
         title,
@@ -102,7 +102,7 @@ export class TaskController {
       }
 
       // Actualiza la tarea solo con las propiedades definidas
-      await this.taskModel.updateTask({id,  input: result.data });
+      await this.taskModel.updateTask({ id, input: result.data });
       res.status(200).json({ message: "Task updated successfully" });
     } catch (error) {
       console.error("Error updating task:", error);

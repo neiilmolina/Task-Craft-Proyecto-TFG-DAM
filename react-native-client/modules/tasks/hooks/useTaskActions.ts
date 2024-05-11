@@ -1,12 +1,6 @@
 import { useAppDispatch } from "../../../store/hooks/store";
-import {
-  Task,
-  addTask,
-  editTask,
-  deleteTask,
-  completeTask,
-  incompleteTask,
-} from "../store/slice";
+import { addTask, editTask, deleteTask } from "../store/slice";
+import { Task } from "../store/interfaces"
 
 export const useUserActions = () => {
   const dispatch = useAppDispatch();
@@ -57,19 +51,9 @@ export const useUserActions = () => {
     dispatch(deleteTask(taskId));
   };
 
-  const markTaskAsComplete = (taskId: string) => {
-    dispatch(completeTask(taskId));
-  };
-
-  const markTaskAsIncomplete = (taskId: string) => {
-    dispatch(incompleteTask(taskId));
-  };
-
   return {
     addNewTask,
     editExistingTask,
     removeTask,
-    markTaskAsComplete,
-    markTaskAsIncomplete,
   };
 };

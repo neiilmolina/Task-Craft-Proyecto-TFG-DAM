@@ -11,23 +11,22 @@ POST http://localhost:2508/tasks
 Content-Type: application/json
 
 {
-  "id":"33e57bce94d4476ab125c8893e52b45a",
+  "id":"f47ac10b58cc4372a5670e02b2c3d479",
   "title": "Tarea importante",
   "description": "Realizar una tarea importante",
   "completed": false,
-  "date": "2024-04-06",
+  "date": "2024-04-06T10:00:00",
   "category": "Tarea",
   "user_id": "5yExbJuVC3NLrLVjA0e7"
 }
 
 ### Actualizar una tarea existente
-PUT http://localhost:2508/tasks/dZQpqLOW0kz3hiXxIMYt
+PUT http://localhost:2508/tasks/f47ac10b58cc4372a5670e02b2c3d479
 Content-Type: application/json
 
 {
-  "description": "Completar el informe mensual de ventas y enviarlo por correo electrónico",
-  "completed": true
+  "date": "2024-04-06T14:00:00"
 }
 
 ### Eliminar una tarea por su ID
-DELETE http://localhost:2508/tasks/IvggJP8E9J4e9z7jFKwz
+DELETE http://localhost:2508/tasks/f47ac10b58cc4372a5670e02b2c3d479

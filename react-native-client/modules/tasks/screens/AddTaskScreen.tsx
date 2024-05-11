@@ -61,7 +61,6 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
   const handleCreateTask = () => {
     // Convertir la fecha y hora a objetos Date
     const taskDate = new Date(date);
-    const taskTime = new Date(time);
 
     // Crear la nueva tarea con los datos ingresados
     const newTask = {
@@ -71,7 +70,7 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
       // Formatear la fecha y la hora a una cadena en formato ISO 8601
       date: format(taskDate, "yyyy-MM-dd'T'HH:mm:ss"),
       completed: false,
-      user_id: "id_del_usuario", // Aquí deberías obtener el ID del usuario actual
+      user_id: "eTHjbJrfOIX52Ee2MRmY3zOG2Li1", // Aquí deberías obtener el ID del usuario actual
     };
     console.log("Nueva tarea:", newTask);
     addNewTask(newTask);
