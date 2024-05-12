@@ -4,7 +4,7 @@ import CheckBox from "react-native-check-box";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import { useUserActions } from "../hooks/useTaskActions";
+import { useTaskActions } from "../hooks/useTaskActions";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
@@ -28,7 +28,7 @@ interface DetailsScreenProps {
 const categories = ["Tarea", "Objetivo", "Evento", "Otros"];
 
 const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
-  const { removeTask, editExistingTask } = useUserActions();
+  const { removeTask, editExistingTask } = useTaskActions();
   const { task } = route.params;
   const [title, setTitle] = useState(task.title);
   const [completed, setCompleted] = useState(task.completed); // Asegura que el estado completed se inicialice con el valor de la tarea

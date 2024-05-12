@@ -1,8 +1,10 @@
 import { type Middleware } from "@reduxjs/toolkit";
 import { Rootstate } from "../index";
-import { config } from "dotenv"
+import { config } from "dotenv";
+import { TaskApi } from "../../modules/tasks/store/interfaces";
+import { parseISO } from "date-fns";
 
-const URL = process.env.API_URL
+const URL = process.env.API_URL;
 
 const syncWithDatabaseMiddlewareTasks: Middleware =
   (store: any) => (next: any) => (action: any) => {
@@ -12,7 +14,13 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
 
     if (type === "tasks/addTask") {
       // Agregar una nueva tarea
-      const newTask = payload;
+      const { date, ...rest } = payload;
+
+      const newTask: TaskApi = {
+        date: parseISO(date),
+        ...rest,
+      };
+
       fetch(`http://192.168.56.1:2508/tasks`, {
         method: "POST",
         body: JSON.stringify(newTask),

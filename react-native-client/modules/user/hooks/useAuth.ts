@@ -15,6 +15,15 @@ export const useAuth = () => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
+      const { token :accessToken, expirationTime } = await response.user.getIdTokenResult();
+
+      return { 
+        accessToken,
+        expirationTime,
+        userData: {
+          ... response.user
+        }
+      }
     } catch (e: any) {
       console.log(e);
       ToastAndroid.show(e.message, ToastAndroid.SHORT);
@@ -40,6 +49,15 @@ export const useAuth = () => {
       );
       console.log(response);
       ToastAndroid.show("Registro realizado", ToastAndroid.SHORT);
+      const { token :accessToken, expirationTime } = await response.user.getIdTokenResult();
+
+      return { 
+        accessToken,
+        expirationTime,
+        userData: {
+          ... response.user
+        }
+      }
 
     } catch (e: any) {
       console.log(e);

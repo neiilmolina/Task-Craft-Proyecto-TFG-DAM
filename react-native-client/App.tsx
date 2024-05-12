@@ -10,6 +10,7 @@ import { FIREBASE_AUTH } from "./FirebaseConfig";
 
 import AuthNavigator from "./modules/user/navigation/AuthNavigator"; // Asegúrate de importar tu AuthNavigator
 import MyTabs from "./app/Navigation/Navigation";
+import { useAppSelector } from "./store/hooks/store";
 
 
 export default function App() {
@@ -23,6 +24,8 @@ export default function App() {
     // Cleanup function to unsubscribe from the auth state listener
     return () => unsubscribe();
   }, []);
+
+  const { isAuth } = useAppSelector((state) => state.auth)
 
   return (
     <Provider store={store}>

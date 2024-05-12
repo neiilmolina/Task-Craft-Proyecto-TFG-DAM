@@ -3,12 +3,13 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import { useUserActions } from "../hooks/useTaskActions";
+import { useTaskActions } from "../hooks/useTaskActions";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
 
 import { format } from "date-fns";
+import { v4 as uuidv4 } from 'uuid';
 
 type AddTaskScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -22,7 +23,7 @@ interface AddTaskScreenProps {
 const categories = ["Tarea", "Objetivo", "Evento", "Otros"];
 
 const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
-  const { addNewTask } = useUserActions();
+  const { addNewTask } = useTaskActions();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState(categories[0]);
@@ -61,9 +62,11 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
   const handleCreateTask = () => {
     // Convertir la fecha y hora a objetos Date
     const taskDate = new Date(date);
+    const id = uuidv4();
 
     // Crear la nueva tarea con los datos ingresados
     const newTask = {
+      id,
       title,
       description,
       category,
