@@ -1,9 +1,7 @@
 import { type Middleware } from "@reduxjs/toolkit";
 import { Rootstate } from "../index";
 import { config } from "dotenv";
-import { TaskApi } from "../../modules/tasks/store/interfaces";
-import { parseISO } from "date-fns";
-
+import { rollbackTask, deleteTask, editTask } from "../../modules/tasks/store/slice";
 const URL = process.env.API_URL;
 
 const syncWithDatabaseMiddlewareTasks: Middleware =
@@ -14,12 +12,7 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
 
     if (type === "tasks/addTask") {
       // Agregar una nueva tarea
-      const { date, ...rest } = payload;
-
-      const newTask: TaskApi = {
-        date: parseISO(date),
-        ...rest,
-      };
+      const newTask = payload;
 
       fetch(`http://192.168.56.1:2508/tasks`, {
         method: "POST",
@@ -40,13 +33,18 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
         })
         .catch((error) => {
           console.error("Error adding task:", error);
+          // store.dispatch(deleteTask(newTask.id));
         });
     }
 
     if (type === "tasks/editTask") {
       // Editar una tarea existente
       const editedTask = payload;
-      fetch(`http://192.168.56.1:2508/tasks/${editedTask.id}`, {
+      const editedTaskId = payload.id;
+      const taskToEdit = previousState.tasks.find(
+        (task) => task.id === editedTaskId
+      );
+      fetch(`http://192.168.56.1:2508/tasks/${editedTaskId}`, {
         method: "PUT",
         body: JSON.stringify(editedTask),
         headers: {
@@ -64,12 +62,18 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
         })
         .catch((error) => {
           console.error("Error editing task:", error);
+          if (editedTask) {
+            store.dispatch(editTask(taskToEdit));
+          }
         });
     }
 
     if (type === "tasks/deleteTask") {
       // Eliminar una tarea
       const taskId = payload;
+      const taskToRemove = previousState.tasks.find(
+        (task) => task.id === taskId
+      );
       fetch(`http://192.168.56.1:2508/tasks/${taskId}`, {
         method: "DELETE",
       })
@@ -82,6 +86,9 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
         })
         .catch((error) => {
           console.error("Error deleting task:", error);
+          if (taskToRemove) {
+            store.dispatch(rollbackTask(taskToRemove));
+          }
         });
     }
   };

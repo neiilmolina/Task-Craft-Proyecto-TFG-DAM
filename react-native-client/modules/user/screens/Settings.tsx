@@ -1,32 +1,65 @@
-import { View, Text, Button } from 'react-native'
-import React from 'react'
+import React from "react";
+import { View, Button, StyleSheet, Alert } from "react-native";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
-import { useAppSelector } from '../../../store/hooks/store';
-import useAuthActions from '../hooks/useAuthActions';
+import { updateEmail, updatePassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import UpdateField from "../components/UdpateFIeld";
+import PasswordField from "../components/PasswordField";
+import { validatePassword } from "../validations/validations";
+import ProfileImage from "../components/ProfileImage";
 
-// import { StackNavigationProp } from "@react-navigation/stack";
-// import { AuthNavigationParamList } from "../navigation/AuthNavigator";
+const Settings = () => {
+  const actualUser = FIREBASE_AUTH.currentUser;
 
-// type SettingsScreenNavigationProp = StackNavigationProp<
-//   AuthNavigationParamList,
-//   "Settings"
-// >;
+  const handleUpdateEmail = async (newEmail) => {
+    try {
+      await sendEmailVerification(actualUser);
+      Alert.alert(
+        "Verify Email",
+        "A verification email has been sent to your new email address. Please verify it before updating your email.",
+        [{ text: "OK" }]
+      );
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
 
-// interface SettingsScreenProps {
-//   navigation: SettingsScreenNavigationProp;
-// }
+  const handleUpdatePassword = async (newPassword) => {
+    try {
+      if (!validatePassword(newPassword)) {
+        return;
+      }
+      await updatePassword(actualUser, newPassword);
+      Alert.alert("Success", "Password updated successfully!");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
 
-const Settings  = () => {
-  const { isAuth } = useAppSelector((state) => state.auth)
-  const { authLogout } = useAuthActions()
+  const handleUpdateDisplayName = async (newDisplayName) => {
+    try {
+      await updateProfile(actualUser, { displayName: newDisplayName });
+      Alert.alert("Success", "Display name updated successfully!");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
 
   return (
-    <View>
-      <Text>Settings</Text>
-      <Button onPress={() => authLogout() } title='logout' />
-
+    <View style={styles.container}>
+      <ProfileImage />
+      <UpdateField label="Email" value={actualUser.email || ""} onSave={handleUpdateEmail} />
+      <UpdateField label="Nombre" value={actualUser.displayName || ""} onSave={handleUpdateDisplayName} />
+      <PasswordField label="Cambia tu contraseña" onSave={handleUpdatePassword} />
+      <Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" />
     </View>
-  )
-}
+  );
+};
 
-export default Settings
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    flexDirection: "column",
+  },
+});
+
+export default Settings;

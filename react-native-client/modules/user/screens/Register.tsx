@@ -3,7 +3,7 @@ import { View, TextInput, Text } from "react-native";
 import { useAuth } from "../hooks/useAuth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthNavigationParamList } from "../navigation/AuthNavigator";
-import StylesAuthForm from "../components/StylesAuthForm";
+import StylesAuthForm from "./styles/StylesAuthForm";
 import MyButton from "../../../app/components/MyButton";
 
 // Asumiendo que AuthNavigationParamList es un tipo definido en otro archivo, aquí lo importamos

@@ -1,7 +1,7 @@
 ### Obtener todas las tareas
 GET http://localhost:2508/tasks
 ### Obtener todas las tareas
-GET http://localhost:2508/tasks?user_id=5yExbJuVC3NLrLVjA0e7
+GET http://localhost:2508/tasks?user_id=5yExbJuVC3NLrLVjA0e0
 
 ### Obtener una tarea por su ID
 GET http://localhost:2508/tasks/fmuDUyscYMN0qyKzmn5y
@@ -11,7 +11,7 @@ POST http://localhost:2508/tasks
 Content-Type: application/json
 
 {
-  "id":"f47ac10b58cc4372a5670e02b2c3d479",
+  "id":"10f5b31b-087d-46e4-908d-518788d33040",
   "title": "Tarea importante",
   "description": "Realizar una tarea importante",
   "completed": false,

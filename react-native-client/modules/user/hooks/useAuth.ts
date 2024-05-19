@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { ToastAndroid } from "react-native";
+import { validatePassword } from "../validations/validations";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
@@ -15,15 +16,6 @@ export const useAuth = () => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
-      const { token :accessToken, expirationTime } = await response.user.getIdTokenResult();
-
-      return { 
-        accessToken,
-        expirationTime,
-        userData: {
-          ... response.user
-        }
-      }
     } catch (e: any) {
       console.log(e);
       ToastAndroid.show(e.message, ToastAndroid.SHORT);
@@ -35,30 +27,14 @@ export const useAuth = () => {
   const signUp = async (email: string, password: string) => {
     setLoading(true);
     try {
-      // Validar longitud de la contraseña
-      if (password.length < 8 || password.length > 20) {
-        const passwordError = "La contraseña debe tener entre 8 y 20 caracteres."
-        ToastAndroid.show("La contraseña debe tener entre 8 y 20 caracteres.", ToastAndroid.SHORT);
-        throw new Error(passwordError);
-
+      const isPasswordValid = validatePassword(password);
+      if (!isPasswordValid) {
+        throw new Error("Password validation failed");
       }
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+  
+      const response = await createUserWithEmailAndPassword(auth, email, password);
       console.log(response);
       ToastAndroid.show("Registro realizado", ToastAndroid.SHORT);
-      const { token :accessToken, expirationTime } = await response.user.getIdTokenResult();
-
-      return { 
-        accessToken,
-        expirationTime,
-        userData: {
-          ... response.user
-        }
-      }
-
     } catch (e: any) {
       console.log(e);
       ToastAndroid.show(e.message, ToastAndroid.SHORT);
@@ -66,6 +42,5 @@ export const useAuth = () => {
       setLoading(false);
     }
   };
-
   return { loading, signIn, signUp };
 };

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isUUID } from "./validations.js";
+import { isUUID, dateString } from "./validations.js";
 
 const taskSchema = z.object({
   id: z.string().refine(
@@ -19,7 +19,7 @@ const taskSchema = z.object({
     required_error: "Task description is required.",
   }),
   completed: z.boolean(),
-  date: z.date(),
+  date: dateString(),
   category: z.enum(["Tarea", "Objetivo", "Evento", "Otros"]).optional(), // Hacer que la categoría sea opcional
   user_id: z.string(), // Ejemplo de validación de formato para user_id
 });

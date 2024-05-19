@@ -1,43 +1,27 @@
-import React, { useEffect, useState } from "react";
-
 import { Provider } from "react-redux";
 import { store } from "./store";
-
 import { NavigationContainer } from "@react-navigation/native";
-
-import { onAuthStateChanged, User } from "firebase/auth";
-import { FIREBASE_AUTH } from "./FirebaseConfig";
-
-import AuthNavigator from "./modules/user/navigation/AuthNavigator"; // Asegúrate de importar tu AuthNavigator
-import MyTabs from "./app/Navigation/Navigation";
-import { useAppSelector } from "./store/hooks/store";
-
+import AuthNavigator from "./modules/user/navigation/AuthNavigator";
+import MyTabs from "./app/Navigation/MainMenuNavigation";
+import useCurrentUser from "./modules/user/hooks/useCurrentUser";
+import { View, Text } from "react-native";
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, loading } = useCurrentUser()
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    // Cleanup function to unsubscribe from the auth state listener
-    return () => unsubscribe();
-  }, []);
-
-  const { isAuth } = useAppSelector((state) => state.auth)
+  if (loading) {
+    return (
+      <View>
+        <Text>Cargando</Text>
+      </View>
+    );
+  }
 
   return (
     <Provider store={store}>
       <NavigationContainer>
-      {/* <MyTabs/> */}
-        {user ? (
-          // Renderiza InsideLayout si hay un usuario autenticado
-          <MyTabs/>
-        ) : (
-          <AuthNavigator /> // Renderiza AuthNavigator si no hay usuario autenticado
-        )}
+        {user ? <MyTabs /> : <AuthNavigator />} 
       </NavigationContainer>
     </Provider>
   );
-}
+} 

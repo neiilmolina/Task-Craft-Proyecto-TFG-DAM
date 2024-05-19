@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import { View, TextInput, Text } from "react-native";
 import { useAuth } from "../hooks/useAuth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthNavigationParamList } from "../navigation/AuthNavigator";
 import MyButton from "../../../app/components/MyButton";
-import StylesAuthForm from "../components/StylesAuthForm";
+import StylesAuthForm from "./styles/StylesAuthForm";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthNavigationParamList,
@@ -33,7 +33,7 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
       <Text style={styles.headerText}>Inicia Sesión</Text>
       <View style={styles.card}>
         <Text style={styles.h1}>Bienvenido</Text>
-        <Text style={styles.h3}>Pon tus credenciales</Text>
+        <Text style={styles.h3}>Introduzca tus credenciales</Text>
         <View style={styles.form}>
           <TextInput
             value={email}
@@ -52,7 +52,7 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
           />
         </View>
         <View style={styles.bottom}>
-        <MyButton title="Login" onPress={handleSignIn} disabled={loading} />
+        <MyButton title="Acceder" onPress={handleSignIn} disabled={loading} />
         <Text style={styles.switchText}>
           ¿No tienes cuenta?{" "}
           <Text

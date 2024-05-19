@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../../../store/hooks/store";
-import { addTask, editTask, deleteTask } from "../store/slice";
+import { addTask, editTask, deleteTask, setTasks } from "../store/slice";
 import { Task, TaskWithId } from "../store/interfaces"
 
 export const useTaskActions = () => {
@@ -54,9 +54,14 @@ export const useTaskActions = () => {
     dispatch(deleteTask(taskId));
   };
 
+  const updateTasks = (tasks: TaskWithId[]) => {
+    dispatch(setTasks(tasks))
+  }
+
   return {
     addNewTask,
     editExistingTask,
     removeTask,
+    updateTasks,
   };
 };

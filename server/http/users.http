@@ -9,10 +9,8 @@ POST http://localhost:2508/users
 Content-Type: application/json
 
 {
-  "id": "82f2842312304eae8f16a931163394f5",
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "password": "password123",
+  "id": "eTHjbJrfOIX52Ee2MRmY3zOG2Li1",
+  "name": "Neil",
   "date": "2024-04-06",
   "url_image": "https://example.com/image.jpg",
   "admin": true

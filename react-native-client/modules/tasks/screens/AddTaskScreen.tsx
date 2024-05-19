@@ -10,6 +10,8 @@ import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
 
 import { format } from "date-fns";
 import { v4 as uuidv4 } from 'uuid';
+import 'react-native-get-random-values'
+import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 
 type AddTaskScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -22,7 +24,8 @@ interface AddTaskScreenProps {
 
 const categories = ["Tarea", "Objetivo", "Evento", "Otros"];
 
-const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
+const AddTaskScreen: React.FC<AddTaskScreenProps> = ({navigation}) => {
+  const userId = FIREBASE_AUTH.currentUser.uid;
   const { addNewTask } = useTaskActions();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -73,10 +76,11 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = () => {
       // Formatear la fecha y la hora a una cadena en formato ISO 8601
       date: format(taskDate, "yyyy-MM-dd'T'HH:mm:ss"),
       completed: false,
-      user_id: "eTHjbJrfOIX52Ee2MRmY3zOG2Li1", // Aquí deberías obtener el ID del usuario actual
+      user_id: userId, // Aquí deberías obtener el ID del usuario actual
     };
     console.log("Nueva tarea:", newTask);
     addNewTask(newTask);
+    navigation.goBack(); 
     // Aquí podrías enviar la nueva tarea al backend o realizar otras acciones necesarias
   };
 

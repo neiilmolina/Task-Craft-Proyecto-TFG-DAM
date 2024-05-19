@@ -58,6 +58,7 @@ export class TaskController {
 
       const newTask = await this.taskModel.createTask({ input: result.data });
       res.status(201).json(newTask);
+      console.log(newTask)
     } catch (error) {
       console.error("Error creating task:", error);
       res.status(500).json({ error: "Internal Server Error" });

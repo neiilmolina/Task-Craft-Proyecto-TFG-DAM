@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isUUID } from "./validations.js";
+import { isUUID } from "../validations.js";
 
 const userSchema = z.object({
   id: z.string().refine(
