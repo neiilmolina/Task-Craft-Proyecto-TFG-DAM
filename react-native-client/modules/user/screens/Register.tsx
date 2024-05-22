@@ -5,6 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthNavigationParamList } from "../navigation/AuthNavigator";
 import StylesAuthForm from "./styles/StylesAuthForm";
 import MyButton from "../../../app/components/MyButton";
+import { ToastAndroid } from "react-native";
 
 // Asumiendo que AuthNavigationParamList es un tipo definido en otro archivo, aquí lo importamos
 
@@ -25,16 +26,17 @@ const Register: React.FC<RegisterScreenProps> = ({ navigation }) => {
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      ToastAndroid.show("Las contraseñas no coinciden", ToastAndroid.SHORT);
       return;
     }
     try {
-      await signUp(email, password);
+      const { correctValidation } = await signUp(email, password);
       // Si el registro es exitoso, podrías navegar a la pantalla de inicio de sesión aquí
-      navigation.navigate("Login"); 
+      if(correctValidation){
+        navigation.navigate("Login");
+      }
     } catch (error) {
       console.error("Error al registrar usuario:", error);
-      alert("Error al registrar usuario");
     }
   };
 
@@ -67,16 +69,16 @@ const Register: React.FC<RegisterScreenProps> = ({ navigation }) => {
           />
         </View>
         <View style={styles.bottom}>
-        <MyButton title="Registrarse" onPress={handleRegister} />
-        <Text style={styles.switchText}>
-          ¿Tienes cuenta?{" "}
-          <Text
-            style={styles.link}
-            onPress={() => navigation.navigate("Login")}
-          >
-            Inicia Sesión
+          <MyButton title="Registrarse" onPress={handleRegister} />
+          <Text style={styles.switchText}>
+            ¿Tienes cuenta?{" "}
+            <Text
+              style={styles.link}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Inicia Sesión
+            </Text>
           </Text>
-        </Text>
         </View>
       </View>
     </View>

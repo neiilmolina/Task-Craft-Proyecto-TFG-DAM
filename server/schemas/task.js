@@ -19,7 +19,7 @@ const taskSchema = z.object({
     required_error: "Task description is required.",
   }),
   completed: z.boolean(),
-  date: dateString(),
+  date: z.date(),
   category: z.enum(["Tarea", "Objetivo", "Evento", "Otros"]).optional(), // Hacer que la categoría sea opcional
   user_id: z.string(), // Ejemplo de validación de formato para user_id
 });
