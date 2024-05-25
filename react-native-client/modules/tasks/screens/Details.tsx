@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import CheckBox from "react-native-check-box";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -14,6 +14,8 @@ import { format } from "date-fns";
 import { Task, TaskWithId } from "../store/interfaces";
 
 import MyButton from "../../../app/components/MyButton";
+import MyInput from "../../../app/components/MyInput";
+import DetailsAddStyles from "./styles/DetailsAddStyles";
 
 type DetailsScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -86,8 +88,7 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Título:</Text>
-      <TextInput
-        style={styles.input}
+      <MyInput
         value={title}
         onChangeText={setTitle}
         placeholder="Ingrese el título de la tarea"
@@ -95,19 +96,27 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
 
       <View style={styles.timeDateContainer}>
         <View style={styles.dateContainer}>
-          <Text>{date.toDateString()}</Text>
-          <Button title="Fecha" onPress={showDatePicker} />
+          <Text style={styles.label}>{date.toDateString()}</Text>
+          <MyButton
+            style={styles.MyButton}
+            title="Fecha"
+            onPress={showDatePicker}
+          />
         </View>
         <View style={styles.dateContainer}>
-          <Text>{time.toLocaleTimeString()}</Text>
-          <Button title="Hora" onPress={showTimePicker} />
+          <Text style={styles.label}>{time.toLocaleTimeString()}</Text>
+          <MyButton
+            style={styles.MyButton}
+            title="Hora"
+            onPress={showTimePicker}
+          />
         </View>
       </View>
 
       <Text style={styles.label}>Descripción:</Text>
-      <TextInput
-        style={[styles.input, { height: 125 }]}
+      <MyInput
         value={description}
+        style={styles.description}
         onChangeText={setDescription}
         multiline
         placeholder="Ingrese la descripción de la tarea"
@@ -140,7 +149,12 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
       />
 
       <CheckBox
-        style={{ flex: 1, padding: 10, justifyContent:"space-around", alignContent:"center" }}
+        style={{
+          flex: 1,
+          padding: 10,
+          justifyContent: "space-around",
+          alignContent: "center",
+        }}
         onClick={() => {
           setCompleted(!completed);
         }}
@@ -149,9 +163,16 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
       />
 
       <View style={styles.buttons}>
-        
-        <MyButton title="Editar" onPress={handleEditTask} />
-        <MyButton title="Eliminar" onPress={handleDeleteTask} />
+        <MyButton
+          style={styles.MyButton}
+          title="Editar"
+          onPress={handleEditTask}
+        />
+        <MyButton
+          style={[styles.MyButton, { backgroundColor: "#F89797" }]}
+          title="Eliminar"
+          onPress={handleDeleteTask}
+        />
       </View>
     </View>
   );
@@ -159,43 +180,4 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
 
 export default DetailsScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    gap: 15,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#1A659E",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-  picker: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  timeDateContainer: {
-    marginTop: 9,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  dateContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  buttons: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around", // Alinea los botones horizontalmente y los separa con espacio
-  },
-});
+const styles = DetailsAddStyles;

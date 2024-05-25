@@ -3,7 +3,7 @@ import { store } from "./store";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./modules/user/navigation/AuthNavigator";
 import MyTabs from "./app/Navigation/MainMenuNavigation";
-import useCurrentUser from "./modules/user/hooks/useCurrentUser";
+import useCurrentUser from "./modules/user/hooks/Authentifcation/useCurrentUser";
 import { View, Text } from "react-native";
 
 export default function App() {

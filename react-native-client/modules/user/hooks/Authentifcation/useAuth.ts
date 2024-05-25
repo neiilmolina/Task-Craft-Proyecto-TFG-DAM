@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { FIREBASE_AUTH } from "../../../../FirebaseConfig";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { ToastAndroid } from "react-native";
-import { validatePassword } from "../validations/validations";
+import { validatePassword } from "../../validations/validations";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);

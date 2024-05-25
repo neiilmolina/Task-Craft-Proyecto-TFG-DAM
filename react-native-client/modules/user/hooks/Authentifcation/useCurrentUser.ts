@@ -1,6 +1,6 @@
 import { User, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { FIREBASE_AUTH } from "../../../../FirebaseConfig";
 
 const useCurrentUser = () => {
   const [loading, setLoading] = useState(true); // Estado de carga

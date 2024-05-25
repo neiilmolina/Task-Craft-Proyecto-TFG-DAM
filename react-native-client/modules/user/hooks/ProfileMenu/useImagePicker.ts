@@ -33,6 +33,7 @@ const useImagePicker = (initialImage) => {
     image,
     pickImageFromGallery,
     takePhotoWithCamera,
+    setImage,
   };
 };
 

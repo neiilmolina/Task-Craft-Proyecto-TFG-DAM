@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { FIREBASE_STORAGE } from '../../../FirebaseConfig';
+import { FIREBASE_STORAGE } from '../../../../FirebaseConfig';
 
 const useImageUpload = (user, image) => {
   const [uploading, setUploading] = useState(false);
@@ -48,7 +48,6 @@ const useImageUpload = (user, image) => {
 
   return {
     uploading,
-    setUploading,
     uploadImage,
   };
 };

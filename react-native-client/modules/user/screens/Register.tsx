@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, TextInput, Text } from "react-native";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/Authentifcation/useAuth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthNavigationParamList } from "../navigation/AuthNavigator";
 import StylesAuthForm from "./styles/StylesAuthForm";

@@ -2,9 +2,9 @@ import React from "react";
 import { View, Button, Image, StyleSheet, Animated } from "react-native";
 import { updateProfile } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
-import useImagePicker from "../hooks/useImagePicker";
-import useImageUpload from "../hooks/useImageUpload";
-import useMenuAnimation from "../hooks/useMenuAnimation";
+import useImagePicker from "../hooks/ProfileMenu/useImagePicker";
+import useImageUpload from "../hooks/ProfileMenu/useImageUpload";
+import useMenuAnimation from "../hooks/ProfileMenu/useMenuAnimation";
 
 const ProfileMenu = ({ image, setImage }) => {
   const actualUser = FIREBASE_AUTH.currentUser;
@@ -17,10 +17,11 @@ const ProfileMenu = ({ image, setImage }) => {
     image: imageMenu,
     pickImageFromGallery,
     takePhotoWithCamera,
+    setImage: setImageMenu,
   } = useImagePicker(image);
   
   const { uploading, uploadImage } = useImageUpload(actualUser, imageMenu);
-  const { menuAnim, toggleMenu, menuVisible } = useMenuAnimation();
+  const { menuAnim } = useMenuAnimation();
 
   const handleUploadImage = async () => {
     try {
@@ -37,7 +38,6 @@ const ProfileMenu = ({ image, setImage }) => {
     try {
       await updateProfile(actualUser, { photoURL: url });
       setImage(url);
-      toggleMenu(); // Cerrar el menú después de actualizar la imagen
     } catch (error) {
       console.error(error);
     }
@@ -83,31 +83,26 @@ const ProfileMenu = ({ image, setImage }) => {
 
 const styles = StyleSheet.create({
   menuContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
     position: "absolute",
-    bottom: 60,
+    bottom: 300,
+    width: 395,
     backgroundColor: "white",
-    borderTopWidth: 1,
-    borderTopColor: "lightgray",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    width: "100%",
+    padding: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     zIndex: 2,
-    height: 250,
-    gap: 10,
   },
   options: {
     flexDirection: "row",
-    gap: 30,
+    justifyContent: "space-around",
+    marginVertical: 20,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     marginBottom: 10,
-    borderRadius: 50,
+    borderRadius: 100,
+    alignSelf: "center",
   },
 });
-
 export default ProfileMenu;

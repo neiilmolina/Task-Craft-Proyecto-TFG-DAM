@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AddTaskScreen from "../screens/AddTaskScreen";
 import List from "../screens/List";
 import Details from "../screens/Details";
-import { TaskWithId } from "../store/slice";
+import { TaskWithId } from "../store/interfaces";
 
 export type TaskNavigationParamList = {
   List: undefined;

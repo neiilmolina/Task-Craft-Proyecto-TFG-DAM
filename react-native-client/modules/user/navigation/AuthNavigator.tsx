@@ -2,13 +2,10 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
-import Settings from "../screens/Settings";
 
 export type AuthNavigationParamList = {
   Login: undefined;
   Register: undefined;
-  // Settings: undefined;
-  // Otras pantallas de tu aplicación y sus parámetros si los tienen
 };
 
 const Stack = createStackNavigator<AuthNavigationParamList>();

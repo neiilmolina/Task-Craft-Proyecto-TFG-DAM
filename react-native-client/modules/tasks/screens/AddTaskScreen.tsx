@@ -12,6 +12,9 @@ import { format } from "date-fns";
 import { v4 as uuidv4 } from 'uuid';
 import 'react-native-get-random-values'
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import DetailsAddStyles from "./styles/DetailsAddStyles";
+import MyInput from "../../../app/components/MyInput";
+import MyButton from "../../../app/components/MyButton";
 
 type AddTaskScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -87,8 +90,7 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Título:</Text>
-      <TextInput
-        style={styles.input}
+      <MyInput
         value={title}
         onChangeText={setTitle}
         placeholder="Ingrese el título de la tarea"
@@ -96,17 +98,17 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({navigation}) => {
       <View style={styles.timeDateContainer}>
         <View style={styles.dateContainer}>
           <Text>{date.toDateString()}</Text>
-          <Button title="Fecha" onPress={showDatePicker} />
+          <MyButton style={styles.MyButton} title="Fecha" onPress={showDatePicker} />
         </View>
         <View style={styles.dateContainer}>
           <Text>{time.toLocaleTimeString()}</Text>
-          <Button title="Hora" onPress={showTimePicker} />
+          <MyButton style={styles.MyButton} title="Hora" onPress={showTimePicker} />
         </View>
       </View>
 
       <Text style={styles.label}>Descripción:</Text>
-      <TextInput
-        style={[styles.input, { height: 100 }]}
+      <MyInput
+        style={styles.description}
         value={description}
         onChangeText={setDescription}
         multiline
@@ -139,45 +141,11 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({navigation}) => {
         onCancel={hideTimePicker}
       />
 
-      <Button title="Crear tarea" onPress={handleCreateTask} />
+      <MyButton title="Crear tarea" onPress={handleCreateTask} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    gap: 15,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#1A659E",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-  picker: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  timeDateContainer: {
-    marginTop: 9,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-  },
-  dateContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-});
+const styles = DetailsAddStyles
 
 export default AddTaskScreen;
