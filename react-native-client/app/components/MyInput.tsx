@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet, TextInputProps, StyleProp, ViewStyle } from "react-native";
 
-interface MyInputProps extends TextInputProps {
+export interface MyInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
 }
 

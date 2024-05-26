@@ -3,16 +3,18 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import ListTaskNavigation from "../../modules/tasks/navigation/ListTaskNavigation";
 import SettingsNavigator from "../../modules/user/navigation/SettingsNavigation";
+import ListDiaryNavigation from "../../modules/diaries/navigation/ListDiaryNavigation";
 
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
   return (
     <Tab.Navigator
-        initialRouteName="ListTaskNavigation"
+        initialRouteName="Tareas"
     >
-      <Tab.Screen name="ListTaskNavigation" component={ListTaskNavigation} options={{headerShown: false}} />
-      <Tab.Screen name="Settings" component={SettingsNavigator} />
+      <Tab.Screen name="Tareas" component={ListTaskNavigation} options={{headerShown: false}} />
+      <Tab.Screen name="Diarios" component={ListDiaryNavigation} options={{headerShown: false}}/>
+      <Tab.Screen name="Ajustes" component={SettingsNavigator} />
     </Tab.Navigator>
   );
 }

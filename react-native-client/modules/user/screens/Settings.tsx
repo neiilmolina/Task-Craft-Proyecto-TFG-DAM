@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import {
-  sendEmailVerification,
-  updateProfile,
-  deleteUser,
-} from "firebase/auth";
+import { updateProfile, deleteUser } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SettingsNavigationParamList } from "../navigation/SettingsNavigation";
@@ -26,15 +22,6 @@ const Settings: React.FC<SettingsScreenProps> = ({ navigation }) => {
   const actualUser = FIREBASE_AUTH.currentUser;
   const [isNameModalVisible, setIsNameModalVisible] = useState(false);
   const [name, setName] = useState<string>(actualUser.displayName);
-
-  const deleteActualUser = async () => {
-    try {
-      await deleteUser(actualUser);
-      await FIREBASE_AUTH.signOut();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleUpdateDisplayName = async (newDisplayName: string) => {
     try {
@@ -76,7 +63,7 @@ const Settings: React.FC<SettingsScreenProps> = ({ navigation }) => {
           title="Email"
           description="Tap to change your password"
           value={actualUser.email}
-          onPress={() => navigation.navigate("EmailScreen")}
+          onPress={() => navigation.navigate("ChangeEmailScreen")}
         />
         <SettingsOption
           icon=""
@@ -88,7 +75,7 @@ const Settings: React.FC<SettingsScreenProps> = ({ navigation }) => {
           icon=""
           title="Eliminar cuenta"
           description="Tap to change your password"
-          onPress={deleteActualUser}
+          onPress={() => navigation.navigate("DeleteUserScreen")}
         />
       </View>
       <MyButton

@@ -5,6 +5,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthNavigationParamList } from "../navigation/AuthNavigator";
 import MyButton from "../../../app/components/MyButton";
 import StylesAuthForm from "./styles/StylesAuthForm";
+import MyInput from "../../../app/components/MyInput";
+import PasswordInput from "../../../app/components/PasswordInput";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthNavigationParamList,
@@ -35,18 +37,19 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
         <Text style={styles.h1}>Bienvenido</Text>
         <Text style={styles.h3}>Introduzca tus credenciales</Text>
         <View style={styles.form}>
-          <TextInput
+          <MyInput
             value={email}
             style={styles.input}
             placeholder="Correo electrónico"
+            textAlignVertical="center"
             autoCapitalize="none"
             onChangeText={(text) => setEmail(text)}
           />
-          <TextInput
+          <PasswordInput
             value={password}
-            secureTextEntry={true}
             style={styles.input}
             placeholder="Contraseña"
+            textAlignVertical="center"
             autoCapitalize="none"
             onChangeText={(text) => setPassword(text)}
           />

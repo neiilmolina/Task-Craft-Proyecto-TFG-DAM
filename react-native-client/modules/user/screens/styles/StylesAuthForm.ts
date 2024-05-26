@@ -40,8 +40,6 @@ const StylesAuthForm = StyleSheet.create({
       width: "100%",
       marginBottom: 10,
       padding: 10,
-      borderWidth: 1,
-      borderColor: "#91CEFA",
       borderRadius: 20,
     },
     bottom: {

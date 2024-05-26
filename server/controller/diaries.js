@@ -33,12 +33,11 @@ export class DiaryController {
 
   createDiary = async (req, res) => {
     try {
-      const { id,description, date, user_id } = req.body;
+      const { id, title,description, date, user_id } = req.body;
       const parsedDate = new Date(date);
       const result = validateDiary({
-        id, description, date: parsedDate, user_id,
+        id, title, description, date: parsedDate, user_id,
       });
-
 
       if (!result.success) {
         return res.status(400).json({ error: result.error });
@@ -54,12 +53,15 @@ export class DiaryController {
   updateDiary = async (req, res) => {
     try {
       const { id } = req.params;
-      const { description, date, user_id } = req.body;
+      const {title, description, date, user_id } = req.body;
   
       // Crea un objeto para almacenar solo las propiedades definidas
       const updatedDiaryData = {};
   
       // Agrega las propiedades definidas al objeto
+      if(title !== undefined){
+        updatedDiaryData.title = title;
+      }
       if (description !== undefined) {
         updatedDiaryData.description = description;
       }
