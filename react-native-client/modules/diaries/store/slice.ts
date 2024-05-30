@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DiaryUI } from "./interfaces";
+import { DiaryUIWithID } from "./interfaces";
 
-const diaries: DiaryUI[] = [
+const diaries: DiaryUIWithID[] = [
     {
       id: "d3b5c0d2-4e4e-49a6-9cfb-12d2a2c4b2b5",
       date: new Date(Date.now()).toISOString(),
@@ -13,12 +13,12 @@ const diaries: DiaryUI[] = [
 
 const diariesSlice = createSlice({
     name: "diaries",
-    initialState:[] as DiaryUI[],
+    initialState:[] as DiaryUIWithID[],
     reducers: {
-      addDiary: (state, action: PayloadAction<DiaryUI>) => {
+      addDiary: (state, action: PayloadAction<DiaryUIWithID>) => {
         state.push({ ...action.payload });
       },
-      editDiary: (state, action: PayloadAction<DiaryUI>) => {
+      editDiary: (state, action: PayloadAction<DiaryUIWithID>) => {
         const index = state.findIndex((diary) => diary.id === action.payload.id);
         if (index !== -1) {
           state[index] = action.payload;
@@ -27,10 +27,10 @@ const diariesSlice = createSlice({
       deleteDiary: (state, action: PayloadAction<string>) => {
         return state.filter((diary) => diary.id !== action.payload);
       },
-      setDiaries: (state, action: PayloadAction<DiaryUI[]>) => {
+      setDiaries: (state, action: PayloadAction<DiaryUIWithID[]>) => {
         return action.payload;
       },
-      rollbackDiary: (state, action: PayloadAction<DiaryUI>) => {
+      rollbackDiary: (state, action: PayloadAction<DiaryUIWithID>) => {
         const isDiaryAlreadyDefined = state.some(
           (diary) => diary.id === action.payload.id
         );

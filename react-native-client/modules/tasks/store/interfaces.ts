@@ -12,7 +12,7 @@ export interface TaskApi {
   
 }
 
-export interface Task {
+export interface TaskUI {
   date: string;
   user_id: string;
   description: string;
@@ -21,6 +21,6 @@ export interface Task {
   category: string;
 }
 
-export interface TaskWithId extends Task{
+export interface TaskUIWithID extends TaskUI{
   id: string;
 }

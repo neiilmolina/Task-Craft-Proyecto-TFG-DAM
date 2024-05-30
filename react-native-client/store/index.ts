@@ -13,7 +13,7 @@ export const store = configureStore({
     users: userReducer,
     diaries: diaryReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(syncWithDatabaseMiddlewareTasks, syncWithDatabaseMiddlewareUsers, syncWithDatabaseMiddlewareDiaries),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(syncWithDatabaseMiddlewareTasks, syncWithDatabaseMiddlewareDiaries),
 });
 
 export type Rootstate = ReturnType<typeof store.getState>;

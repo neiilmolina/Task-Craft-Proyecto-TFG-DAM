@@ -1,10 +1,10 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { format } from "date-fns";
-import { TaskWithId } from "../store/interfaces";
+import { TaskUIWithID } from "../store/interfaces";
 
 interface TaskProps {
-  task: TaskWithId;
+  task: TaskUIWithID;
   navigation: any;
 }
 

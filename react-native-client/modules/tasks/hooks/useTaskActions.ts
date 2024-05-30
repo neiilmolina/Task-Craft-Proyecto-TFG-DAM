@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../../store/hooks/store";
 import { addTask, editTask, deleteTask, setTasks } from "../store/slice";
-import { Task, TaskWithId } from "../store/interfaces"
+import { TaskUI, TaskUIWithID } from "../store/interfaces";
 
 export const useTaskActions = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ export const useTaskActions = () => {
     completed,
     title,
     category,
-  }: TaskWithId) => {
+  }: TaskUIWithID) => {
     // Convertir la fecha a formato ISO 8601 antes de llamar al action creator
 
     const isoDate = new Date(date).toISOString();
@@ -33,7 +33,7 @@ export const useTaskActions = () => {
 
   const editExistingTask = (
     taskId: string,
-    { date, user_id, description, completed, title, category }: Task
+    { date, user_id, description, completed, title, category }: TaskUI
   ) => {
     dispatch(
       editTask({
@@ -54,9 +54,9 @@ export const useTaskActions = () => {
     dispatch(deleteTask(taskId));
   };
 
-  const updateTasks = (tasks: TaskWithId[]) => {
-    dispatch(setTasks(tasks))
-  }
+  const updateTasks = (tasks: TaskUIWithID[]) => {
+    dispatch(setTasks(tasks));
+  };
 
   return {
     addNewTask,

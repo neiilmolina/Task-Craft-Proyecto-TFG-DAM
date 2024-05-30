@@ -7,7 +7,7 @@ import MyButton from "../../../app/components/MyButton";
 import { format } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 import "react-native-get-random-values";
-import { DiaryUI } from "../store/interfaces";
+import { DiaryUIWithID } from "../store/interfaces";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -33,7 +33,7 @@ const AddDiaryScreen: React.FC<AddDiaryScreenProps> = ({ navigation }) => {
     const date = new Date(Date.now()).toISOString();
     const id = uuidv4();
 
-    const newDiary: DiaryUI = {
+    const newDiary: DiaryUIWithID = {
       id,
       date,
       title,

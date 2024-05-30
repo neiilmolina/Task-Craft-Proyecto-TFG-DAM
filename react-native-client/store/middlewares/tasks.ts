@@ -2,6 +2,7 @@ import { type Middleware } from "@reduxjs/toolkit";
 import { Rootstate } from "../index";
 import { config } from "dotenv";
 import { rollbackTask, deleteTask, editTask } from "../../modules/tasks/store/slice";
+import { TaskUIWithID } from "../../modules/tasks/store/interfaces";
 const URL = process.env.API_URL;
 
 const syncWithDatabaseMiddlewareTasks: Middleware =
@@ -12,7 +13,7 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
 
     if (type === "tasks/addTask") {
       // Agregar una nueva tarea
-      const newTask = payload;
+      const newTask = payload as TaskUIWithID;
 
       fetch(`http://192.168.56.1:2508/tasks`, {
         method: "POST",

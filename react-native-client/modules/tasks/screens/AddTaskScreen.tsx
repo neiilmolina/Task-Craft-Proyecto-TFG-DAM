@@ -15,6 +15,7 @@ import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import DetailsAddStyles from "./styles/DetailsAddStyles";
 import MyInput from "../../../app/components/MyInput";
 import MyButton from "../../../app/components/MyButton";
+import { TaskUIWithID } from "../store/interfaces";
 
 type AddTaskScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -71,7 +72,7 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({navigation}) => {
     const id = uuidv4();
 
     // Crear la nueva tarea con los datos ingresados
-    const newTask = {
+    const newTask: TaskUIWithID = {
       id,
       title,
       description,

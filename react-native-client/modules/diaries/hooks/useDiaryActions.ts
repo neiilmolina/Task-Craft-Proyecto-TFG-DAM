@@ -5,12 +5,12 @@ import {
   deleteDiary,
   setDiaries,
 } from "../store/slice";
-import { DiaryUI } from "../store/interfaces";
+import { DiaryUIWithID, DiaryUI } from "../store/interfaces";
 
 export const useDiaryActions = () => {
   const dispatch = useAppDispatch();
 
-  const addNewDiary = ({ id, date, user_id, description, title }: DiaryUI) => {
+  const addNewDiary = ({ id, date, user_id, description, title }: DiaryUIWithID) => {
     const isoDate = new Date(date).toISOString();
     dispatch(addDiary({ id, date: isoDate, user_id, description, title }));
   };
@@ -28,7 +28,7 @@ export const useDiaryActions = () => {
     dispatch(deleteDiary(diaryId));
   };
 
-  const updateDiaries = (diaries: DiaryUI[]) => {
+  const updateDiaries = (diaries: DiaryUIWithID[]) => {
     dispatch(setDiaries(diaries));
   };
 

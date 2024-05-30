@@ -3,12 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AddTaskScreen from "../screens/AddTaskScreen";
 import List from "../screens/List";
 import Details from "../screens/Details";
-import { TaskWithId } from "../store/interfaces";
+import { TaskUIWithID } from "../store/interfaces";
 
 export type TaskNavigationParamList = {
   List: undefined;
   AddTaskScreen: undefined;
-  Details: { task: TaskWithId }; // Define los parámetros que se pasarán a la pantalla Details
+  Details: { task: TaskUIWithID }; // Define los parámetros que se pasarán a la pantalla Details
 };
 
 const Stack = createStackNavigator();

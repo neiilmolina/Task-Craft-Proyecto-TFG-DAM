@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TaskWithId } from "./interfaces";
+import { TaskUIWithID } from "./interfaces";
 
 const tasksSlice = createSlice({
   name: "tasks",
-  initialState: [] as TaskWithId[],
+  initialState: [] as TaskUIWithID[],
   reducers: {
-    addTask: (state, action: PayloadAction<TaskWithId>) => {
+    addTask: (state, action: PayloadAction<TaskUIWithID>) => {
       state.push({ ...action.payload });
     },
-    editTask: (state, action: PayloadAction<TaskWithId>) => {
+    editTask: (state, action: PayloadAction<TaskUIWithID>) => {
       const index = state.findIndex((task) => task.id === action.payload.id);
       if (index !== -1) {
         state[index] = action.payload;
@@ -17,10 +17,10 @@ const tasksSlice = createSlice({
     deleteTask: (state, action: PayloadAction<string>) => {
       return state.filter((task) => task.id !== action.payload);
     },
-    setTasks: (state, action: PayloadAction<TaskWithId[]>) => {
+    setTasks: (state, action: PayloadAction<TaskUIWithID[]>) => {
       return action.payload;
     },
-    rollbackTask: (state, action: PayloadAction<TaskWithId>) => {
+    rollbackTask: (state, action: PayloadAction<TaskUIWithID>) => {
       const isTaskAlreadyDefined = state.some(
         (task) => task.id === action.payload.id
       );

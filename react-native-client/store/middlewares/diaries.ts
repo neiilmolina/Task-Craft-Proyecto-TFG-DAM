@@ -6,7 +6,7 @@ import {
   deleteDiary,
   editDiary,
 } from "../../modules/diaries/store/slice";
-import { DiaryUI, DiaryApi } from "../../modules/diaries/store/interfaces";
+import { DiaryUI, DiaryUIWithID } from "../../modules/diaries/store/interfaces";
 
 const URL = "http://192.168.56.1:2508"; // process.env.API_URL;
 
@@ -17,8 +17,8 @@ const syncWithDatabaseMiddlewareDiaries: Middleware =
     next(action);
 
     if (type === "diaries/addDiary") {
-      const newDiary = payload as DiaryUI;
-
+      const newDiary = payload as DiaryUIWithID;
+    
       fetch(`${URL}/diaries`, {
         method: "POST",
         body: JSON.stringify(newDiary),
@@ -37,6 +37,9 @@ const syncWithDatabaseMiddlewareDiaries: Middleware =
         })
         .catch((error) => {
           console.error("Error adding diary:", error);
+          if(error.code !== "[SyntaxError: JSON Parse error: Unexpected end of input]"){
+              return
+          }
           // Optional: dispatch an action to handle the error
         });
     }

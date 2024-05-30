@@ -1,8 +1,8 @@
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
-import { TaskApi, TaskWithId } from "./interfaces";
+import { TaskApi, TaskUIWithID } from "./interfaces";
 
 
-export const fetchTasks = (): Promise<TaskWithId[]> => {
+export const fetchTasks = (): Promise<TaskUIWithID[]> => {
   const userId = FIREBASE_AUTH.currentUser ? FIREBASE_AUTH.currentUser.uid : null;
 
   if (!userId) {
@@ -18,8 +18,8 @@ export const fetchTasks = (): Promise<TaskWithId[]> => {
       return response.json(); // Parsea la respuesta JSON
     })
     .then((data) => {
-      // Mapea los datos a un arreglo de tareas con la interfaz TaskWithId
-      const tasks: TaskWithId[] = data.map((task: TaskApi) => ({
+      // Mapea los datos a un arreglo de tareas con la interfaz TaskUIWithID
+      const tasks: TaskUIWithID[] = data.map((task: TaskApi) => ({
         id: task.id,
         date: new Date(task.date._seconds * 1000).toISOString(), // Convertir la fecha a cadena ISO 8601
         user_id: task.user_id,

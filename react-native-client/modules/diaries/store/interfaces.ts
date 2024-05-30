@@ -10,9 +10,12 @@ export interface DiaryApi {
 }
 
 export interface DiaryUI {
-  id: string;
   date: string;
   user_id: string;
   description: string;
   title: string;
+}
+
+export interface DiaryUIWithID extends DiaryUI {
+  id: string;
 }

@@ -1,7 +1,7 @@
-import { DiaryApi, DiaryUI } from "../store/interfaces";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { DiaryApi, DiaryUIWithID } from "../store/interfaces";
 
-export const fetchDiaries = (): Promise<DiaryUI[]> => {
+export const fetchDiaries = (): Promise<DiaryUIWithID[]> => {
     const userId = FIREBASE_AUTH.currentUser ? FIREBASE_AUTH.currentUser.uid : null;
   
     if (!userId) {
@@ -17,8 +17,8 @@ export const fetchDiaries = (): Promise<DiaryUI[]> => {
         return response.json(); // Parsea la respuesta JSON
       })
       .then((data) => {
-        // Mapea los datos a un arreglo de diarios con la interfaz DiaryUI
-        const diaries: DiaryUI[] = data.map((diary: DiaryApi) => ({
+        // Mapea los datos a un arreglo de diarios con la interfaz DiaryUIWithID
+        const diaries: DiaryUIWithID[] = data.map((diary: DiaryApi) => ({
           id: diary.id,
           date: new Date(diary.date._seconds * 1000).toISOString(), // Convertir la fecha a cadena ISO 8601
           user_id: diary.user_id,
