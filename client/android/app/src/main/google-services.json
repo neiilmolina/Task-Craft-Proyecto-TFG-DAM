@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "112619909842",
+    "project_id": "tfg-base-de-datos-b7c3d",
+    "storage_bucket": "tfg-base-de-datos-b7c3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112619909842:android:fc45dd5eb38f707f97730b",
+        "android_client_info": {
+          "package_name": "com.neiilmolina.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "112619909842-4rq1hmkvlo70ocu6f86kn42h6a6k7cah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTTkCgK400YBEcDdSPy_pqpyzrkpQpPxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "112619909842-4rq1hmkvlo70ocu6f86kn42h6a6k7cah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
