@@ -18,7 +18,7 @@ const syncWithDatabaseMiddlewareDiaries: Middleware =
 
     if (type === "diaries/addDiary") {
       const newDiary = payload as DiaryUIWithID;
-    
+
       fetch(`${URL}/diaries`, {
         method: "POST",
         body: JSON.stringify(newDiary),
@@ -36,11 +36,18 @@ const syncWithDatabaseMiddlewareDiaries: Middleware =
           console.log("Diary added successfully:", data);
         })
         .catch((error) => {
-          console.error("Error adding diary:", error);
-          if(error.code !== "[SyntaxError: JSON Parse error: Unexpected end of input]"){
-              return
+          if (
+            error instanceof SyntaxError &&
+            error.message.includes("Unexpected end of input")
+          ) {
+            // No hacemos nada si se detecta este error específico
+            console.log(
+              "SyntaxError: JSON Parse error: Unexpected end of input"
+            );
+            // Retornamos para evitar que el error llegue al bloque catch
+            return;
           }
-          // Optional: dispatch an action to handle the error
+          deleteDiary(newDiary.id);
         });
     }
 

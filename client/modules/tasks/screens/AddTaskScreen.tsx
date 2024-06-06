@@ -14,6 +14,7 @@ import {
   validateDateTime,
   maxLengthDescription,
   maxLengthTitle,
+  combineDateAndTime,
 } from "../validations/validations";
 
 import DateTimeSelector from "../components/DateTimeSelector";
@@ -51,14 +52,6 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({ navigation }) => {
     description: null,
     dateTime: null,
   });
-
-  const combineDateAndTime = (date: Date, time: Date) => {
-    const combinedDate = new Date(date);
-    combinedDate.setHours(time.getHours());
-    combinedDate.setMinutes(time.getMinutes());
-    combinedDate.setSeconds(time.getSeconds());
-    return combinedDate;
-  };
 
   const handleCreateTask = () => {
     const titleError = validateTitle(title);

@@ -1,33 +1,30 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import AddTaskScreen from "../screens/AddTaskScreen";
-import List from "../screens/List";
 import Details from "../screens/Details";
 import Calendar from "../screens/Calendar";
 import { TaskUIWithID } from "../store/interfaces";
 
-export type TaskNavigationParamList = {
-  List: undefined;
+export type CalendarTaskNavigationParamList = {
+  Calendar: undefined; // Define los parámetros que se pasarán a la pantalla Details
   AddTaskScreen: undefined;
   Details: { task: TaskUIWithID };
-  Calendar: undefined; // Define los parámetros que se pasarán a la pantalla Details
 };
 
 const Stack = createStackNavigator();
 
-const ListTaskNavigation = () => {
+const CalendarTaskNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="List"
-        component={List}
+        name="Calendario"
+        component={Calendar}
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Añadir Tarea" component={AddTaskScreen} />
       <Stack.Screen name="Detalles" component={Details} />
-      <Stack.Screen name="Calendario" component={Calendar}/>
     </Stack.Navigator>
   );
 };
 
-export default ListTaskNavigation;
+export default CalendarTaskNavigation;

@@ -24,6 +24,7 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
       })
         .then((res) => {
           if (!res.ok) {
+            
             throw new Error("Failed to add task");
           }
           return res.json();
@@ -33,8 +34,13 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
           console.log("Task added successfully:", data);
         })
         .catch((error) => {
-          console.error("Error adding task:", error);
-          // store.dispatch(deleteTask(newTask.id));
+          if (error instanceof SyntaxError && error.message.includes("Unexpected end of input")) {
+            // No hacemos nada si se detecta este error específico
+            console.log("SyntaxError: JSON Parse error: Unexpected end of input");
+            // Retornamos para evitar que el error llegue al bloque catch
+            return;
+          }
+          store.dispatch(deleteTask(newTask.id));
         });
     }
 

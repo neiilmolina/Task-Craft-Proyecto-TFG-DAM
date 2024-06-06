@@ -3,13 +3,14 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import Icons from "react-native-vector-icons/MaterialIcons"
 
 interface TaskHeaderProps {
+  title: string;
   navigation: any;
 }
 
-const TaskHeader: React.FC<TaskHeaderProps> = ({ navigation }) => {
+const TaskHeader: React.FC<TaskHeaderProps> = ({title, navigation }) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>Tareas</Text>
+      <Text style={styles.title}>{title}</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate("Añadir Tarea")}
       >

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ListTaskNavigation from "../../modules/tasks/navigation/ListTaskNavigation";
 import SettingsNavigator from "../../modules/user/navigation/SettingsNavigation";
 import ListDiaryNavigation from "../../modules/diaries/navigation/ListDiaryNavigation";
+import CalendarTaskNavigation from "../../modules/tasks/navigation/CalendarTaskNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +25,16 @@ export default function MyTabs() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Icon name="tasks" color={color} size={size} />
+          ),
+        }} 
+      />
+      <Tab.Screen
+        name={"Calendario"}
+        component={CalendarTaskNavigation}
+        options={{ 
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="calendar" color={color} size={size} />
           ),
         }} 
       />

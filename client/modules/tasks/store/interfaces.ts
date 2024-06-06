@@ -1,3 +1,6 @@
+import { AgendaEntry } from "react-native-calendars";
+
+
 export interface TaskApi {
     id: string;
     date: {
@@ -22,5 +25,20 @@ export interface TaskUI {
 }
 
 export interface TaskUIWithID extends TaskUI{
+  id: string;
+}
+
+interface AgendaTask {
+  id: string;
+  name: string;
+  height: number;
+  day: string;
+}
+
+export interface GroupedTasks {
+  [key: string]: AgendaTask[];
+}
+
+export interface AgendaEntryUI extends AgendaEntry{
   id: string;
 }

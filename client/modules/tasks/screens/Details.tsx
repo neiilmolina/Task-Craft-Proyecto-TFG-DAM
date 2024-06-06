@@ -16,6 +16,7 @@ import {
   validateDateTime,
   maxLengthDescription,
   maxLengthTitle,
+  combineDateAndTime,
 } from "../validations/validations";
 import { useTextCounter } from "../../../app/hooks/useTextCounter";
 import { useTaskActions } from "../hooks/useTaskActions";
@@ -32,7 +33,7 @@ interface DetailsScreenProps {
 
 const categories = ["Tarea", "Objetivo", "Evento", "Otros"];
 
-const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
+const Details: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
   const { removeTask, editExistingTask } = useTaskActions();
   const { task } = route.params;
   const [title, setTitle] = useState(task.title);
@@ -51,14 +52,6 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
     description: null,
     dateTime: null,
   });
-
-  const combineDateAndTime = (date: Date, time: Date) => {
-    const combinedDate = new Date(date);
-    combinedDate.setHours(time.getHours());
-    combinedDate.setMinutes(time.getMinutes());
-    combinedDate.setSeconds(time.getSeconds());
-    return combinedDate;
-  };
 
   const handleEditTask = () => {
     const titleError = validateTitle(title);
@@ -198,4 +191,4 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
 
 const styles = DetailsAddStyles;
 
-export default DetailsScreen;
+export default Details;
