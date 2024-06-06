@@ -6,29 +6,19 @@ const StylesFormOptions = StyleSheet.create({
     padding: 20,
     backgroundColor: "white",
   },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
   input: {
-    flex: 1,
-    height: 50,
-    paddingLeft: 8,
-  },
-  passwordVisibilityButton: {
-    position: "absolute",
-    right: 10,
+    height: 40, // Ajusta esta altura según sea necesario
+    paddingHorizontal: 10,
+    marginVertical: 5,
   },
   Buttons: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
   },
   MyButton: {
-    width: 120,
-    height: 50,
+    flex: 1,
+    marginHorizontal: 5,
   },
 });
 

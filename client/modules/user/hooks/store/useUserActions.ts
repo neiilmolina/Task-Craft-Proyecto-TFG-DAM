@@ -1,37 +1,35 @@
-import { useAppDispatch } from "../../../store/hooks/store";
-import { addUser, editUser, deleteUser, setUsers } from "../store/slice";
-import { UserApp } from "../store/interfaces";
+import { useAppDispatch } from "../../../../store/hooks/store";
+import { addUser, editUser, deleteUser, setUsers } from "../../store/slice";
+import { UserUIWithId } from "../../store/interfaces";
 
 export const useUserActions = () => {
   const dispatch = useAppDispatch();
 
-  const addNewUser = ({ id, name, date, admin, url_image }: UserApp) => {
+  const addNewUser = ({ id, date, admin, createDiary }: UserUIWithId) => {
     // Convertir la fecha a formato ISO 8601 antes de llamar al action creator
-
     const isoDate = new Date(date).toISOString();
 
     dispatch(
       addUser({
         id,
-        name,
         date: isoDate,
         admin,
-        url_image,
+        createDiary,
       })
     );
   };
 
-  const editExistingUser = ({ id, name, date, admin, url_image }: UserApp) => {
-    dispatch(editUser({ id, name, date, admin, url_image }));
+  const editExistingUser = ({ id, date, admin, createDiary }: UserUIWithId) => {
+    dispatch(editUser({ id, date, admin, createDiary }));
   };
 
   const removeUser = (userId: string) => {
     dispatch(deleteUser(userId));
   };
 
-  const updateUsers = (users: UserApp[]) => {
+  const updateUsers = (users: UserUIWithId[]) => {
     dispatch(setUsers(users));
-  }
+  };
 
   return {
     addNewUser,

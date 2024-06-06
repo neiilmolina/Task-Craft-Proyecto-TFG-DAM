@@ -18,15 +18,13 @@ interface ChangeEmailScreenProps {
   navigation: ChangeEmailScreenNavigationProp;
 }
 
-const ChangeEmailScreen: React.FC<ChangeEmailScreenProps> = ({
-  navigation,
-}) => {
+const ChangeEmailScreen: React.FC<ChangeEmailScreenProps> = ({ navigation }) => {
   const actualUser = FIREBASE_AUTH.currentUser;
   const [email, setEmail] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleDeleteUser = async () => {
+  const handleUpdateEmail = async () => {
     if (!email || !password || !newEmail) {
       Alert.alert("Error", "Please enter your email and password.");
       return;
@@ -52,7 +50,7 @@ const ChangeEmailScreen: React.FC<ChangeEmailScreenProps> = ({
   };
 
   return (
-    <View style={[styles.container, { height: 50 }]}>
+    <View style={styles.container}>
       <MyInput
         style={styles.input}
         value={email}
@@ -75,7 +73,7 @@ const ChangeEmailScreen: React.FC<ChangeEmailScreenProps> = ({
         <MyButton
           style={styles.MyButton}
           title="Guardar"
-          onPress={() => handleDeleteUser()} // Llamada correcta a la función
+          onPress={handleUpdateEmail}
         />
         <MyButton
           style={[styles.MyButton, { backgroundColor: "#F89797" }]}
@@ -87,6 +85,6 @@ const ChangeEmailScreen: React.FC<ChangeEmailScreenProps> = ({
   );
 };
 
-const styles = StylesFormOptions;
+const styles = StyleSheet.create(StylesFormOptions);
 
 export default ChangeEmailScreen;

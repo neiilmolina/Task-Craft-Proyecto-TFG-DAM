@@ -20,6 +20,12 @@ const DiaryFormStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around", // Alinea los botones horizontalmente y los separa con espacio
   },
+  error: {
+    color: "red",
+    marginTop: 5,
+    marginBottom: 5,
+    textAlign: "center",
+  },
 });
 
 export default DiaryFormStyles;

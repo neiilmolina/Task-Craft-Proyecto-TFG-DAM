@@ -20,7 +20,7 @@ const ListDiaryNavigation = () => {
           component={List}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Añadir Tarea" component={AddDiaryScreen} />
+        <Stack.Screen name="Añadir Diario" component={AddDiaryScreen} />
         <Stack.Screen name="Detalles del diario" component={Details} />
       </Stack.Navigator>
     );

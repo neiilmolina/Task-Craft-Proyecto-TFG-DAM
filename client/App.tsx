@@ -5,7 +5,7 @@ import AuthNavigator from "./modules/user/navigation/AuthNavigator";
 import MyTabs from "./app/Navigation/MainMenuNavigation";
 import useCurrentUser from "./modules/user/hooks/Authentifcation/useCurrentUser";
 import { View, Text } from "react-native";
-import { usePushNotifications } from "./app/usePushNotifications";
+import { usePushNotifications } from "./app/hooks/usePushNotifications";
 
 export default function App() {
   const { user, loading } = useCurrentUser();

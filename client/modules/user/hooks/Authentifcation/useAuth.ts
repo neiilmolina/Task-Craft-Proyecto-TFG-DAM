@@ -26,21 +26,24 @@ export const useAuth = () => {
 
   const signUp = async (email: string, password: string) => {
     let correctValidation = false;
+    let newUserId = null;
     setLoading(true);
     try {
       const isPasswordValid = validatePassword(password);
       if (!isPasswordValid) {
         throw new Error("Password validation failed");
       }
-
+  
       const response = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
       console.log(response);
+      // Obtener el ID del usuario después de registrar
+      newUserId = FIREBASE_AUTH.currentUser?.uid;
+      console.log(newUserId);
       ToastAndroid.show("Registro realizado", ToastAndroid.SHORT);
-      await FIREBASE_AUTH.signOut();
       correctValidation = true;
     } catch (e: any) {
       console.log(e);
@@ -48,8 +51,9 @@ export const useAuth = () => {
     } finally {
       setLoading(false);
     }
-
-    return { correctValidation };
+  
+    return { correctValidation, newUserId };
   };
+  
   return { loading, signIn, signUp };
 };

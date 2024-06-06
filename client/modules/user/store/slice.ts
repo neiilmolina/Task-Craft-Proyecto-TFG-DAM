@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { UserApp } from "./interfaces"
+import { UserUIWithId } from "./interfaces"
 
 const userSlice = createSlice({
   name: "users",
-  initialState: [] as UserApp[] ,
+  initialState: [] as UserUIWithId[] ,
   reducers: {
-    addUser: (state, action: PayloadAction<UserApp>) => {
+    addUser: (state, action: PayloadAction<UserUIWithId>) => {
       state.push({...action.payload});
     },
-    editUser: (state, action: PayloadAction<UserApp>) => {
+    editUser: (state, action: PayloadAction<UserUIWithId>) => {
       const index = state.findIndex((user) => user.id === action.payload.id);
       if (index !== -1) {
         state[index] = action.payload;
@@ -17,7 +17,7 @@ const userSlice = createSlice({
     deleteUser: (state, action: PayloadAction<string>) => {
       return state.filter((user) => user.id !== action.payload);
     },
-    setUsers: (state, action: PayloadAction<UserApp[]>) => {
+    setUsers: (state, action: PayloadAction<UserUIWithId[]>) => {
       return action.payload;
     }
   },

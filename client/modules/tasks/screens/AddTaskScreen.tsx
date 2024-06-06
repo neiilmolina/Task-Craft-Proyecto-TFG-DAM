@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-
-import { useTaskActions } from "../hooks/useTaskActions";
-
+import { Text, StyleSheet, ScrollView } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
-
 import { format } from "date-fns";
-import { v4 as uuidv4 } from 'uuid';
-import 'react-native-get-random-values'
+import { v4 as uuidv4 } from "uuid";
+import "react-native-get-random-values";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import DetailsAddStyles from "./styles/DetailsAddStyles";
-import MyInput from "../../../app/components/MyInput";
-import MyButton from "../../../app/components/MyButton";
 import { TaskUIWithID } from "../store/interfaces";
+import {
+  validateTitle,
+  validateDescription,
+  validateDateTime,
+  maxLengthDescription,
+  maxLengthTitle,
+} from "../validations/validations";
+
+import DateTimeSelector from "../components/DateTimeSelector";
+import CategoryPicker from "../components/CategoryPicker";
+import MyButton from "../../../app/components/MyButton";
+import { useTaskActions } from "../hooks/useTaskActions";
+import MyInput from "../../../app/components/MyInput";
+import { useTextCounter } from "../../../app/hooks/useTextCounter";
 
 type AddTaskScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -28,7 +34,7 @@ interface AddTaskScreenProps {
 
 const categories = ["Tarea", "Objetivo", "Evento", "Otros"];
 
-const AddTaskScreen: React.FC<AddTaskScreenProps> = ({navigation}) => {
+const AddTaskScreen: React.FC<AddTaskScreenProps> = ({ navigation }) => {
   const userId = FIREBASE_AUTH.currentUser.uid;
   const { addNewTask } = useTaskActions();
   const [title, setTitle] = useState("");
@@ -36,117 +42,105 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({navigation}) => {
   const [category, setCategory] = useState(categories[0]);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
 
-  const showDatePicker = () => {
-    setIsDatePickerVisible(true);
+  const { length: titleLength } = useTextCounter(title);
+  const { length: descriptionLength } = useTextCounter(description);
+
+  const [errors, setErrors] = useState({
+    title: null,
+    description: null,
+    dateTime: null,
+  });
+
+  const combineDateAndTime = (date: Date, time: Date) => {
+    const combinedDate = new Date(date);
+    combinedDate.setHours(time.getHours());
+    combinedDate.setMinutes(time.getMinutes());
+    combinedDate.setSeconds(time.getSeconds());
+    return combinedDate;
   };
 
-  const hideDatePicker = () => {
-    setIsDatePickerVisible(false);
-  };
-
-  const handleConfirmDate = (selectedDate: Date) => {
-    hideDatePicker();
-    setDate(selectedDate);
-  };
-
-  const showTimePicker = () => {
-    setIsTimePickerVisible(true);
-  };
-
-  const hideTimePicker = () => {
-    setIsTimePickerVisible(false);
-  };
-
-  const handleConfirmTime = (selectedTime: Date) => {
-    hideTimePicker();
-    setTime(selectedTime);
-  };
-
-  // Dentro de handleCreateTask
   const handleCreateTask = () => {
-    // Convertir la fecha y hora a objetos Date
-    const taskDate = new Date(date);
+    const titleError = validateTitle(title);
+    const descriptionError = validateDescription(description);
+    const dateTimeError = validateDateTime(date, time);
+
+    if (titleError || descriptionError || dateTimeError) {
+      setErrors({
+        title: titleError,
+        description: descriptionError,
+        dateTime: dateTimeError,
+      });
+      return;
+    }
+
+    const combinedDateTime = combineDateAndTime(date, time);
     const id = uuidv4();
 
-    // Crear la nueva tarea con los datos ingresados
     const newTask: TaskUIWithID = {
       id,
       title,
       description,
       category,
-      // Formatear la fecha y la hora a una cadena en formato ISO 8601
-      date: format(taskDate, "yyyy-MM-dd'T'HH:mm:ss"),
+      date: format(combinedDateTime, "yyyy-MM-dd'T'HH:mm:ss"),
       completed: false,
-      user_id: userId, // Aquí deberías obtener el ID del usuario actual
+      user_id: userId,
     };
+
     console.log("Nueva tarea:", newTask);
     addNewTask(newTask);
-    navigation.goBack(); 
-    // Aquí podrías enviar la nueva tarea al backend o realizar otras acciones necesarias
+    navigation.goBack();
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Título:</Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.label}>
+        Título ({titleLength}/{maxLengthTitle}):
+      </Text>
       <MyInput
         value={title}
         onChangeText={setTitle}
         placeholder="Ingrese el título de la tarea"
+        maxLength={maxLengthTitle}
       />
-      <View style={styles.timeDateContainer}>
-        <View style={styles.dateContainer}>
-          <Text>{date.toDateString()}</Text>
-          <MyButton style={styles.MyButton} title="Fecha" onPress={showDatePicker} />
-        </View>
-        <View style={styles.dateContainer}>
-          <Text>{time.toLocaleTimeString()}</Text>
-          <MyButton style={styles.MyButton} title="Hora" onPress={showTimePicker} />
-        </View>
-      </View>
+      {errors.title && <Text style={styles.error}>{errors.title}</Text>}
 
-      <Text style={styles.label}>Descripción:</Text>
+      <DateTimeSelector
+        date={date}
+        setDate={setDate}
+        time={time}
+        setTime={setTime}
+        error={errors.dateTime}
+        disabled={false}
+      />
+
+      <Text style={styles.label}>
+        Descripción ({descriptionLength}/{maxLengthDescription}):
+      </Text>
       <MyInput
-        style={styles.description}
         value={description}
         onChangeText={setDescription}
-        multiline
         placeholder="Ingrese la descripción de la tarea"
-        textAlignVertical="top"
+        multiline
+        style={styles.description}
+        maxLength={maxLengthDescription}
       />
+      {errors.description && (
+        <Text style={styles.error}>{errors.description}</Text>
+      )}
 
-      <Text style={styles.label}>Categoría:</Text>
-      <Picker
+      <CategoryPicker
         selectedValue={category}
-        onValueChange={(itemValue: string) => setCategory(itemValue)}
-        style={styles.picker}
-      >
-        {categories.map((category) => (
-          <Picker.Item key={category} label={category} value={category} />
-        ))}
-      </Picker>
-
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirmDate}
-        onCancel={hideDatePicker}
-      />
-
-      <DateTimePickerModal
-        isVisible={isTimePickerVisible}
-        mode="time"
-        onConfirm={handleConfirmTime}
-        onCancel={hideTimePicker}
+        onValueChange={setCategory}
+        categories={categories}
+        enabled={true}
       />
 
       <MyButton title="Crear tarea" onPress={handleCreateTask} />
-    </View>
+    </ScrollView>
   );
 };
 
-const styles = DetailsAddStyles
+const styles = DetailsAddStyles;
 
 export default AddTaskScreen;

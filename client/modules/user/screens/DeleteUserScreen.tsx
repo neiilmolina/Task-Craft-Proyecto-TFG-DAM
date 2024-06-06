@@ -8,6 +8,7 @@ import MyButton from "../../../app/components/MyButton";
 import MyInput from "../../../app/components/MyInput";
 import { EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import PasswordInput from "../../../app/components/PasswordInput";
+import { useUserActions } from "../hooks/store/useUserActions";
 
 type DeleteUserScreenNavigationProp = StackNavigationProp<
   SettingsNavigationParamList,
@@ -22,6 +23,7 @@ const DeleteUserScreen: React.FC<DeleteUserScreenProps> = ({ navigation }) => {
   const actualUser = FIREBASE_AUTH.currentUser;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { removeUser } = useUserActions();
 
   const confirmDeleteUser = () => {
     Alert.alert(
@@ -30,12 +32,12 @@ const DeleteUserScreen: React.FC<DeleteUserScreenProps> = ({ navigation }) => {
       [
         {
           text: "Cancel",
-          style: "cancel"
+          style: "cancel",
         },
         {
           text: "OK",
-          onPress: handleDeleteUser
-        }
+          onPress: handleDeleteUser,
+        },
       ]
     );
   };
@@ -48,13 +50,14 @@ const DeleteUserScreen: React.FC<DeleteUserScreenProps> = ({ navigation }) => {
     const credential = EmailAuthProvider.credential(email, password);
     try {
       await reauthenticateWithCredential(actualUser, credential);
+      removeUser(actualUser.uid);
       await actualUser.delete();
       Alert.alert("Success", "Your account has been deleted.");
-      FIREBASE_AUTH.signOut(); // Navigate to login screen or another appropriate screen after deletion
+      await FIREBASE_AUTH.signOut(); // Navigate to login screen or another appropriate screen after deletion
     } catch (error) {
-      if (error.code === 'auth/wrong-password') {
+      if (error.code === "auth/wrong-password") {
         Alert.alert("Error", "Incorrect password. Please try again.");
-      } else if (error.code === 'auth/requires-recent-login') {
+      } else if (error.code === "auth/requires-recent-login") {
         Alert.alert("Error", "Please re-authenticate and try again.");
       } else {
         Alert.alert("Error", error.message);

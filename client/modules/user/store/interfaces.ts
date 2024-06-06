@@ -1,17 +1,20 @@
-interface GeneralUser {
-  id: string;
-  name: string;
-  admin: boolean;
-  url_image: string;
-}
 
-export interface UserApi extends GeneralUser {
+export interface UserApi {
+  id: string;
+  admin: boolean;
   date: {
     _seconds: number;
     _nanoseconds: number;
   };
+  createDiary: boolean;
 }
 
-export interface UserApp extends GeneralUser{
+export interface UserUI{
+  admin: boolean;
   date: string;
+  createDiary: boolean;
+}
+
+export interface UserUIWithId extends UserUI {
+  id: string;
 }

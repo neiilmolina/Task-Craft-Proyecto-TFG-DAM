@@ -4,7 +4,7 @@ const DetailsAddStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    gap: 5,
+    gap: 20,
   },
   label: {
     fontWeight: "500",
@@ -36,6 +36,12 @@ const DetailsAddStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around", // Alinea los botones horizontalmente y los separa con espacio
+  },
+  error: {
+    color: "red",
+    marginTop: 5,
+    marginBottom: 5,
+    textAlign: "center",
   },
 });
 

@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
+import Icons from "react-native-vector-icons/MaterialIcons"
 
 interface TaskHeaderProps {
   navigation: any;
@@ -9,10 +10,11 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({ navigation }) => {
   return (
     <View style={styles.header}>
       <Text style={styles.title}>Tareas</Text>
-      <Button
-        title="Añadir tarea"
+      <TouchableOpacity
         onPress={() => navigation.navigate("Añadir Tarea")}
-      />
+      >
+        <Icons name="add" color="white" size={30}/>
+      </TouchableOpacity>
     </View>
   );
 };

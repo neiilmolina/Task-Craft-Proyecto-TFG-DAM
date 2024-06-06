@@ -5,6 +5,7 @@ import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import useImagePicker from "../hooks/ProfileMenu/useImagePicker";
 import useImageUpload from "../hooks/ProfileMenu/useImageUpload";
 import useMenuAnimation from "../hooks/ProfileMenu/useMenuAnimation";
+import MyButton from "../../../app/components/MyButton";
 
 const ProfileMenu = ({ image, setImage }) => {
   const actualUser = FIREBASE_AUTH.currentUser;
@@ -61,18 +62,18 @@ const ProfileMenu = ({ image, setImage }) => {
     >
       {imageMenu && <Image source={{ uri: imageMenu }} style={styles.image} />}
       <View style={styles.options}>
-        <Button
+        <MyButton
           title="Galería"
           onPress={pickImageFromGallery}
           disabled={uploading}
         />
-        <Button
+        <MyButton
           title="Cámara"
           onPress={takePhotoWithCamera}
           disabled={uploading}
         />
       </View>
-      <Button
+      <MyButton
         title="Subir Imagen"
         onPress={handleUploadImage}
         disabled={imageMenu === image || uploading}
@@ -84,7 +85,7 @@ const ProfileMenu = ({ image, setImage }) => {
 const styles = StyleSheet.create({
   menuContainer: {
     position: "absolute",
-    bottom: 300,
+    bottom: 450,
     width: 395,
     backgroundColor: "white",
     padding: 20,

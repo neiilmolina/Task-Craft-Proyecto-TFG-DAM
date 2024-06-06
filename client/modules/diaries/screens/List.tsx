@@ -40,8 +40,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   diaryContainer: {
-    flex: 1,
+    flex: 3,
     padding: 10,
+    gap: 20,
+    flexDirection:"row",
     width: "100%",
+    flexWrap:"wrap",
   },
 });

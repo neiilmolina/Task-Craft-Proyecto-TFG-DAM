@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import { updateProfile, deleteUser } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SettingsNavigationParamList } from "../navigation/SettingsNavigation";
+
 import FormModal from "../components/FormModal";
 import ProfileImage from "../components/ProfileImage";
-import MyButton from "../../../app/components/MyButton";
 import SettingsOption from "../components/SettingsOption";
+
+import MyButton from "../../../app/components/MyButton";
+
+import IconFontisto from "react-native-vector-icons/Fontisto";
+import IconFeather from "react-native-vector-icons/Feather";
+import IconMaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useUserActions } from "../hooks/store/useUserActions";
+import { useAppSelector } from "../../../store/hooks/store";
+import useUsersLoader from "../hooks/store/useUsersLoader";
 
 type SettingsScreenNavigationProp = StackNavigationProp<
   SettingsNavigationParamList,
@@ -19,7 +28,11 @@ interface SettingsScreenProps {
 }
 
 const Settings: React.FC<SettingsScreenProps> = ({ navigation }) => {
+  const iconSize = 20;
   const actualUser = FIREBASE_AUTH.currentUser;
+  const moreInfoUser = useUsersLoader().find((user) => user.id === actualUser.uid);
+  // const { editExistingUser } = useUserActions();
+  // const [dateUser, setDateUser] = useState(moreInfoUser.date);
   const [isNameModalVisible, setIsNameModalVisible] = useState(false);
   const [name, setName] = useState<string>(actualUser.displayName);
 
@@ -39,15 +52,18 @@ const Settings: React.FC<SettingsScreenProps> = ({ navigation }) => {
     }
   };
 
+  const handleUpdateUserRedux = () => {};
+
   return (
     <View style={styles.container}>
       <ProfileImage />
       <View style={styles.options}>
         <SettingsOption
-          icon=""
+          icon={<IconFeather name="user" size={iconSize} />}
           title="Nombre"
-          value={actualUser.displayName}
+          value={name}
           description="Tap to change your password"
+          editIcon={true}
           onPress={() => setIsNameModalVisible(true)}
         />
         <FormModal
@@ -55,27 +71,31 @@ const Settings: React.FC<SettingsScreenProps> = ({ navigation }) => {
           onClose={() => setIsNameModalVisible(false)}
           label="Actualizar nuevo nombre"
           placeholder="Introduzca un nuevo nombre"
-          value={name}
           onSave={handleUpdateDisplayName}
         />
         <SettingsOption
-          icon=""
+          icon={<IconFontisto name="email" size={iconSize} />}
           title="Email"
           description="Tap to change your password"
           value={actualUser.email}
+          editIcon={true}
           onPress={() => navigation.navigate("ChangeEmailScreen")}
         />
         <SettingsOption
-          icon=""
+          icon={<IconMaterialIcons name="password" size={iconSize} />}
           title="Cambiar contraseña"
           description="Tap to change your password"
           onPress={() => navigation.navigate("PasswordScreen")}
+          editIcon={true}
+          value={null}
         />
         <SettingsOption
-          icon=""
+          icon={<IconMaterialIcons name="delete" size={iconSize} />}
           title="Eliminar cuenta"
           description="Tap to change your password"
           onPress={() => navigation.navigate("DeleteUserScreen")}
+          editIcon={false}
+          value={null}
         />
       </View>
       <MyButton

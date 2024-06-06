@@ -1,12 +1,13 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import Icons from "react-native-vector-icons/FontAwesome6";
 
 interface SettingsOptionProps {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   value: string | null; // Ahora value puede ser null
   description: string;
+  editIcon: boolean;
   onPress: () => void;
 }
 
@@ -15,29 +16,30 @@ const SettingsOption: React.FC<SettingsOptionProps> = ({
   title,
   value = null,
   description,
+  editIcon,
   onPress,
 }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text>Ic</Text>
+      {icon}
       <View style={styles.optionContainer}>
         <Text style={styles.title}>{title}</Text>
         {value !== null ? <Text style={styles.value}>{value}</Text> : null}
         <Text style={styles.description}>{description}</Text>
       </View>
-      <Text>Ic</Text>
+      {editIcon ? <Icons name="pencil" size={17} /> : <Text>{""}</Text>}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal:-17,
+    marginHorizontal: -17,
     padding: 13,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    gap: 10,
+    gap: 5,
     borderTopWidth: 1,
     borderTopColor: "#ccc",
     borderBottomWidth: 1,
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
     color: "#1A659E",
   },
   description: {
-    fontWeight:"400"
+    fontWeight: "400",
   },
   optionContainer: {
     gap: 3,
