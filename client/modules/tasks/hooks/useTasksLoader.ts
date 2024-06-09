@@ -24,7 +24,7 @@ const useTasksLoader = () => {
     };
 
     loadTasks();
-  }, [dispatch, updateTasks]);
+  }, []);
 
   return { tasks, loading, error };
 };

@@ -1,9 +1,8 @@
 import { StyleSheet, Text, Pressable, Alert } from "react-native";
 import { View } from "../components/ViewCalendar";
-import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
-import { Agenda, AgendaEntry } from "react-native-calendars";
+import { Agenda } from "react-native-calendars";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
+import React, { useMemo } from "react";
 import useGroupTasksByDate from "../hooks/useGroupDateTasks"; // import your new function
 import { AgendaEntryUI } from "../store/interfaces";
 import useTasksLoader from "../hooks/useTasksLoader";
@@ -22,6 +21,7 @@ interface CalendarScreenProps {
 const Calendar: React.FC<CalendarScreenProps> = ({ navigation }) => {
   const { tasks } = useTasksLoader();
   const groupedTasks = useGroupTasksByDate(tasks); // group tasks by date
+  const todayDate = useMemo(() => new Date().toISOString().split("T")[0], []);
 
   const renderItem = (reservation: AgendaEntryUI, isFirst: boolean) => {
     const getTask = tasks.find((t) => t.id === reservation.id);
@@ -54,7 +54,7 @@ const Calendar: React.FC<CalendarScreenProps> = ({ navigation }) => {
       <TaskHeader title="Calendario" navigation={navigation} />
       <Agenda
         items={groupedTasks}
-        selected={new Date().toISOString().split("T")[0]} // corrected line
+        selected={todayDate} // corrected line
         renderItem={renderItem}
         renderEmptyDate={renderEmptyDate}
       />

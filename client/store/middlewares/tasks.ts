@@ -40,7 +40,7 @@ const syncWithDatabaseMiddlewareTasks: Middleware =
             // Retornamos para evitar que el error llegue al bloque catch
             return;
           }
-          store.dispatch(deleteTask(newTask.id));
+          // store.dispatch(deleteTask(newTask.id));
         });
     }
 

@@ -14,8 +14,6 @@ import MyButton from "../../../app/components/MyButton";
 import IconFontisto from "react-native-vector-icons/Fontisto";
 import IconFeather from "react-native-vector-icons/Feather";
 import IconMaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { useUserActions } from "../hooks/store/useUserActions";
-import { useAppSelector } from "../../../store/hooks/store";
 import useUsersLoader from "../hooks/store/useUsersLoader";
 
 type SettingsScreenNavigationProp = StackNavigationProp<

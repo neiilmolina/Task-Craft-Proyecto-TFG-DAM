@@ -29,7 +29,7 @@ export default function MyTabs() {
         }} 
       />
       <Tab.Screen
-        name={"Calendario"}
+        name={"Navegación calendario"}
         component={CalendarTaskNavigation}
         options={{ 
           headerShown: false,

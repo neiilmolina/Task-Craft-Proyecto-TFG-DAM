@@ -5,7 +5,6 @@ import { TaskUIWithID } from "../store/interfaces"; // Importa tu interfaz TaskU
 
 interface TaskSectionProps {
   tasks: TaskUIWithID[];
-  filterFn: (task: TaskUIWithID) => boolean;
   emptyMessage: string;
   navigation: any;
   title: string;
@@ -13,7 +12,6 @@ interface TaskSectionProps {
 
 const TaskSection: React.FC<TaskSectionProps> = ({
   tasks,
-  filterFn,
   emptyMessage,
   navigation,
   title,
@@ -21,17 +19,15 @@ const TaskSection: React.FC<TaskSectionProps> = ({
   // Ordenar las tareas por fecha de manera descendente
   const sortedTasks = tasks.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Filtrar las tareas
-  const filteredTasks = sortedTasks.filter(filterFn);
 
   return (
     <>
       <Text style={styles.label}>{title}</Text>
       <View>
-        {filteredTasks.length === 0 ? (
+        {sortedTasks.length === 0 ? (
           <Text style={styles.message}>{emptyMessage}</Text>
         ) : (
-          filteredTasks.map((task) => (
+          sortedTasks.map((task) => (
             <Task key={task.id} task={task} navigation={navigation} />
           ))
         )}

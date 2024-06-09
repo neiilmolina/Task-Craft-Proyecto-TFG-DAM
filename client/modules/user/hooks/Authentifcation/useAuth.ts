@@ -3,6 +3,7 @@ import { FIREBASE_AUTH } from "../../../../FirebaseConfig";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { ToastAndroid } from "react-native";
 import { validatePassword } from "../../validations/validations";
@@ -39,10 +40,7 @@ export const useAuth = () => {
         email,
         password
       );
-      console.log(response);
-      // Obtener el ID del usuario después de registrar
-      newUserId = FIREBASE_AUTH.currentUser?.uid;
-      console.log(newUserId);
+      newUserId = response.user.uid; // Obtenemos el ID del usuario
       ToastAndroid.show("Registro realizado", ToastAndroid.SHORT);
       correctValidation = true;
     } catch (e: any) {
@@ -52,8 +50,9 @@ export const useAuth = () => {
       setLoading(false);
     }
   
-    return { correctValidation, newUserId };
+    return { correctValidation, newUserId }; // Devolvemos el ID del usuario
   };
+  
   
   return { loading, signIn, signUp };
 };

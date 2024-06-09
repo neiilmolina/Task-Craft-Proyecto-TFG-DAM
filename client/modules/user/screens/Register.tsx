@@ -10,6 +10,7 @@ import PasswordInput from "../../../app/components/PasswordInput";
 import MyInput from "../../../app/components/MyInput";
 import { useUserActions } from "../hooks/store/useUserActions";
 import { UserUIWithId } from "../store/interfaces";
+import ImageLogo from "../../../app/components/ImageLogo";
 
 // Asumiendo que AuthNavigationParamList es un tipo definido en otro archivo, aquí lo importamos
 
@@ -49,7 +50,7 @@ const Register: React.FC<RegisterScreenProps> = ({ navigation }) => {
           createDiary: true,
         };
 
-        addNewUser(userDataBase);
+        // addNewUser(userDataBase);
       }
     } catch (error) {
       console.error("Error al registrar usuario:", error);
@@ -59,9 +60,10 @@ const Register: React.FC<RegisterScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Registrate</Text>
+      <ImageLogo width={70} height={70}/>
       <View style={styles.card}>
         <Text style={styles.h1}>Bienvenido</Text>
-        <Text style={styles.h3}>Pon tus credenciales</Text>
+        <Text style={styles.h3}>Introduzca tus credenciales</Text>
         <View style={styles.form}>
           <MyInput
             style={styles.input}

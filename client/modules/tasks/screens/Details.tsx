@@ -20,6 +20,10 @@ import {
 } from "../validations/validations";
 import { useTextCounter } from "../../../app/hooks/useTextCounter";
 import { useTaskActions } from "../hooks/useTaskActions";
+import {
+  rescheduleNotificationForTask,
+  removeNotificationIdFromStorage,
+} from "../hooks/taskNotifications";
 
 type DetailsScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -78,11 +82,13 @@ const Details: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
     };
     editExistingTask(task.id, updatedTask);
     setIsEditing(false);
+    rescheduleNotificationForTask({ id: task.id, ...updatedTask });
     navigation.goBack();
   };
 
   const handleDeleteTask = () => {
     removeTask(task.id);
+    removeNotificationIdFromStorage(task.id);
     navigation.goBack();
   };
 

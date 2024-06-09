@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { format } from "date-fns";
 import { TaskUIWithID } from "../store/interfaces";
@@ -10,7 +10,7 @@ interface TaskProps {
 
 const Task: React.FC<TaskProps> = ({ task, navigation }) => {
   return (
-    <TouchableOpacity
+    <Pressable
       key={task.id}
       onPress={() => navigation.navigate("Detalles", { task })}
     >
@@ -22,7 +22,7 @@ const Task: React.FC<TaskProps> = ({ task, navigation }) => {
         </View>
         <Text style={styles.dateText}>{task.category}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

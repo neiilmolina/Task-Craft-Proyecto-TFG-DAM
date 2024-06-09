@@ -1,4 +1,7 @@
-import { validateUser, validatePartialUser } from "../../schemas/user/userFirebase.js";
+import {
+  validateUser,
+  validatePartialUser,
+} from "../../schemas/user/userFirebase.js";
 
 export class UserController {
   constructor({ userModel }) {
@@ -24,15 +27,13 @@ export class UserController {
   };
 
   create = async (req, res) => {
-    const {id, name, date, url_image, admin } = req.body;
+    const { id, date, admin } = req.body;
 
     const parsedDate = new Date(date);
 
     const result = validateUser({
       id,
-      name,
       date: parsedDate,
-      url_image,
       admin,
     });
 
@@ -44,15 +45,13 @@ export class UserController {
 
   update = async (req, res) => {
     const { id } = req.params;
-    const { name, date, url_image, admin } = req.body;
+    const { date, admin } = req.body;
 
     const parsedDate = new Date(date);
 
     // Validar los datos del usuario actualizado
     const result = validatePartialUser({
-      name,
       date: parsedDate,
-      url_image,
       admin,
     });
 

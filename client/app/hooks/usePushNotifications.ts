@@ -6,7 +6,6 @@
  */
 
 import { useState, useEffect, useRef } from "react";
-import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 
 import Constants from "expo-constants";
@@ -37,6 +36,7 @@ export const usePushNotifications = (): PushNotificationState => {
 
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
+  
 
   async function registerForPushNotificationsAsync() {
     let token;

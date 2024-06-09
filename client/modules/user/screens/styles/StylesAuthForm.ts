@@ -2,18 +2,20 @@ import { StyleSheet } from "react-native";
 
 const StylesAuthForm = StyleSheet.create({
     h1: {
-      paddingTop: 40,
+      textAlign:"center",
+      paddingTop: 10,
       fontSize: 20,
       fontWeight: "bold",
     },
     headerText: {
+      marginTop: 120,
+      marginBottom: 10,
       paddingTop: 40,
-      fontSize: 20,
+      fontSize: 25,
       fontWeight: "bold",
     },
     h3: {
-      marginTop: 40,
-      marginBottom: 20,
+      marginTop: 20,
       textAlign: "center",
     },
     container: {
@@ -44,7 +46,7 @@ const StylesAuthForm = StyleSheet.create({
     },
     bottom: {
       flexDirection:"column",
-      gap:30,
+      gap:10,
     },
     switchText: {
       marginTop: 20,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Text } from "react-native";
+import { View, Text } from "react-native";
 import { useAuth } from "../hooks/Authentifcation/useAuth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthNavigationParamList } from "../navigation/AuthNavigator";
@@ -7,6 +7,7 @@ import MyButton from "../../../app/components/MyButton";
 import StylesAuthForm from "./styles/StylesAuthForm";
 import MyInput from "../../../app/components/MyInput";
 import PasswordInput from "../../../app/components/PasswordInput";
+import ImageLogo from "../../../app/components/ImageLogo";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   AuthNavigationParamList,
@@ -33,6 +34,7 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Inicia Sesión</Text>
+      <ImageLogo width={70} height={70}/>
       <View style={styles.card}>
         <Text style={styles.h1}>Bienvenido</Text>
         <Text style={styles.h3}>Introduzca tus credenciales</Text>
@@ -55,16 +57,16 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
           />
         </View>
         <View style={styles.bottom}>
-        <MyButton title="Acceder" onPress={handleSignIn} disabled={loading} />
-        <Text style={styles.switchText}>
-          ¿No tienes cuenta?{" "}
-          <Text
-            style={styles.link}
-            onPress={() => navigation.navigate("Register")}
-          >
-            Regístrate
+          <MyButton title="Acceder" onPress={handleSignIn} disabled={loading} />
+          <Text style={styles.switchText}>
+            ¿No tienes cuenta?{" "}
+            <Text
+              style={styles.link}
+              onPress={() => navigation.navigate("Register")}
+            >
+              Regístrate
+            </Text>
           </Text>
-        </Text>
         </View>
       </View>
     </View>

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   View,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   SafeAreaView,
@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
-
 import useTasksLoader from "../hooks/useTasksLoader";
 import TaskHeader from "../components/TaskHeader";
 import TaskListSection from "../components/TaskListSection";
@@ -23,33 +22,35 @@ interface ListProps {
 const List = ({ navigation }: ListProps) => {
   const { tasks, loading, error } = useTasksLoader();
 
+  const renderTaskListSection = React.useCallback(
+    ({ item }) => <TaskListSection tasks={item} navigation={navigation} />,
+    [navigation]
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <TaskHeader title="Tareas" navigation={navigation} />
 
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#1A659E" />
         </View>
       ) : error ? (
         <View style={styles.errorContainer}>
           <Text style={styles.errorMessage}>{error}</Text>
         </View>
+      ) : tasks.length > 0 ? (
+        <FlatList
+          data={[tasks]} // FlatList requiere una prop `data`
+          renderItem={renderTaskListSection}
+          keyExtractor={(item, index) => index.toString()} // Necesita un `keyExtractor`
+          contentContainerStyle={styles.taskContainer}
+          ListFooterComponent={<View style={styles.bottomSpacing} />}
+        />
       ) : (
-        <ScrollView
-          style={styles.taskContainer}
-          contentContainerStyle={styles.scrollViewContent}
-        >
-          {tasks.length > 0 ? (
-            <>
-              <TaskListSection tasks={tasks} navigation={navigation} />
-              {/* Espacio adicional para evitar que el contenido sea cortado */}
-              <View style={styles.bottomSpacing} />
-            </>
-          ) : (
-            <Text style={styles.message}>No tienes tareas en este momento</Text>
-          )}
-        </ScrollView>
+        <View style={styles.messageContainer}>
+          <Text style={styles.message}>No tienes tareas en este momento</Text>
+        </View>
       )}
     </SafeAreaView>
   );
@@ -63,15 +64,17 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   taskContainer: {
-    flex: 1,
+    flexGrow: 1,
     padding: 10,
-    width: "100%",
-  },
-  scrollViewContent: {
     paddingBottom: 50, // Espacio adicional al final del contenido
   },
   bottomSpacing: {
     height: 50, // Altura del espacio adicional
+  },
+  messageContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   message: {
     marginVertical: 25,
