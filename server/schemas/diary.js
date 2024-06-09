@@ -17,11 +17,7 @@ const diarySchema = z.object({
     required_error: "The description is required",
   }).max(500, "The description must be at most 500 characters long"),
   date: z.date(),
-  user_id: z.string().refine((userId) => {
-    return isUUID(userId); // Validamos el user_id utilizando la función isUUID
-  }, {
-    message: "The user_id must be a valid UUID"
-  })
+  user_id: z.string(),
 });
 
 export function validateDiary(input) {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, ScrollView } from "react-native";
+import { Text, ScrollView } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TaskNavigationParamList } from "../navigation/ListTaskNavigation";
 import { format } from "date-fns";
@@ -14,6 +14,7 @@ import {
   validateDateTime,
   maxLengthDescription,
   maxLengthTitle,
+  combineDateAndTime,
 } from "../validations/validations";
 
 import DateTimeSelector from "../components/DateTimeSelector";
@@ -22,6 +23,7 @@ import MyButton from "../../../app/components/MyButton";
 import { useTaskActions } from "../hooks/useTaskActions";
 import MyInput from "../../../app/components/MyInput";
 import { useTextCounter } from "../../../app/hooks/useTextCounter";
+import { scheduleNotificationForTask } from "../hooks/taskNotifications";
 
 type AddTaskScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -52,15 +54,7 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({ navigation }) => {
     dateTime: null,
   });
 
-  const combineDateAndTime = (date: Date, time: Date) => {
-    const combinedDate = new Date(date);
-    combinedDate.setHours(time.getHours());
-    combinedDate.setMinutes(time.getMinutes());
-    combinedDate.setSeconds(time.getSeconds());
-    return combinedDate;
-  };
-
-  const handleCreateTask = () => {
+  const handleCreateTask = async () => {
     const titleError = validateTitle(title);
     const descriptionError = validateDescription(description);
     const dateTimeError = validateDateTime(date, time);
@@ -87,7 +81,10 @@ const AddTaskScreen: React.FC<AddTaskScreenProps> = ({ navigation }) => {
       user_id: userId,
     };
 
-    console.log("Nueva tarea:", newTask);
+    // Programar la notificación
+    await scheduleNotificationForTask(newTask);
+
+    // Agregar la tarea a la base de datos
     addNewTask(newTask);
     navigation.goBack();
   };

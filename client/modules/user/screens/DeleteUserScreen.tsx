@@ -50,8 +50,8 @@ const DeleteUserScreen: React.FC<DeleteUserScreenProps> = ({ navigation }) => {
     const credential = EmailAuthProvider.credential(email, password);
     try {
       await reauthenticateWithCredential(actualUser, credential);
-      removeUser(actualUser.uid);
       await actualUser.delete();
+      removeUser(actualUser.uid);
       Alert.alert("Success", "Your account has been deleted.");
       await FIREBASE_AUTH.signOut(); // Navigate to login screen or another appropriate screen after deletion
     } catch (error) {

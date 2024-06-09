@@ -1,7 +1,7 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
-import { EmailAuthProvider, reauthenticateWithCredential, updateEmail } from "firebase/auth";
+import { EmailAuthProvider, reauthenticateWithCredential, signOut, updateEmail } from "firebase/auth";
 import StylesFormOptions from "./styles/StylesFormOptions";
 import MyInput from "../../../app/components/MyInput";
 import PasswordInput from "../../../app/components/PasswordInput";
@@ -37,6 +37,7 @@ const ChangeEmailScreen: React.FC<ChangeEmailScreenProps> = ({ navigation }) => 
     try {
       await reauthenticateWithCredential(actualUser, credential);
       await updateEmail(actualUser, newEmail);
+      await FIREBASE_AUTH.signOut();
       Alert.alert("Success", "Tu email se ha cambiado");
     } catch (error) {
       if (error.code === "auth/wrong-password") {

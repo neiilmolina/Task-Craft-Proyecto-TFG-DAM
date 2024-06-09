@@ -16,9 +16,14 @@ import {
   validateDateTime,
   maxLengthDescription,
   maxLengthTitle,
+  combineDateAndTime,
 } from "../validations/validations";
 import { useTextCounter } from "../../../app/hooks/useTextCounter";
 import { useTaskActions } from "../hooks/useTaskActions";
+import {
+  rescheduleNotificationForTask,
+  removeNotificationIdFromStorage,
+} from "../hooks/taskNotifications";
 
 type DetailsScreenNavigationProp = StackNavigationProp<
   TaskNavigationParamList,
@@ -32,7 +37,7 @@ interface DetailsScreenProps {
 
 const categories = ["Tarea", "Objetivo", "Evento", "Otros"];
 
-const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
+const Details: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
   const { removeTask, editExistingTask } = useTaskActions();
   const { task } = route.params;
   const [title, setTitle] = useState(task.title);
@@ -51,14 +56,6 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
     description: null,
     dateTime: null,
   });
-
-  const combineDateAndTime = (date: Date, time: Date) => {
-    const combinedDate = new Date(date);
-    combinedDate.setHours(time.getHours());
-    combinedDate.setMinutes(time.getMinutes());
-    combinedDate.setSeconds(time.getSeconds());
-    return combinedDate;
-  };
 
   const handleEditTask = () => {
     const titleError = validateTitle(title);
@@ -85,11 +82,13 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
     };
     editExistingTask(task.id, updatedTask);
     setIsEditing(false);
+    rescheduleNotificationForTask({ id: task.id, ...updatedTask });
     navigation.goBack();
   };
 
   const handleDeleteTask = () => {
     removeTask(task.id);
+    removeNotificationIdFromStorage(task.id);
     navigation.goBack();
   };
 
@@ -198,4 +197,4 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation, route }) => {
 
 const styles = DetailsAddStyles;
 
-export default DetailsScreen;
+export default Details;

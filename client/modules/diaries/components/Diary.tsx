@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { format } from "date-fns";
 import { DiaryUIWithID } from "../store/interfaces";
@@ -11,14 +11,14 @@ interface DiaryProps {
 const Diary: React.FC<DiaryProps> = ({ diary, navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      <Pressable
         key={diary.id}
         onPress={() => navigation.navigate("Detalles del diario", { diary })}
       >
         <View style={styles.diary}>
           <Text>{diary.description.substring(0, 50)}</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <Text style={styles.diaryText}>{diary.title}</Text>
       <Text style={styles.dateText}>{format(diary.date, "dd-MM-yyyy")}</Text>
     </View>

@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import MyInput from "../../../app/components/MyInput";
-import { useDiaryActions } from "../hooks/useDiaryActions";
 import MyButton from "../../../app/components/MyButton";
 import { v4 as uuidv4 } from "uuid";
 import "react-native-get-random-values";
@@ -17,6 +16,8 @@ import {
   maxLengthDescription,
   maxLengthTitle,
 } from "../validations/validations";
+import { useDiaryActions } from "../hooks/useDiaryActions";
+import { scheduleNotificationForDiary } from "../notifications/diaryNotifications";
 
 type AddDiaryScreenNavigationProp = StackNavigationProp<
   ListNavigationParamList,
@@ -36,7 +37,7 @@ const AddDiaryScreen: React.FC<AddDiaryScreenProps> = ({ navigation }) => {
   const { length: titleLength } = useTextCounter(title);
   const { length: descriptionLength } = useTextCounter(description);
 
-  const handleAddDiary = () => {
+  const handleAddDiary = async () => {
     const titleError = validateTitle(title);
     const descriptionError = validateDescription(description);
 
@@ -60,7 +61,17 @@ const AddDiaryScreen: React.FC<AddDiaryScreenProps> = ({ navigation }) => {
       user_id: userId,
     };
 
+    // Añadir el diario
     addNewDiary(newDiary);
+
+    // Programar una notificación un día después de añadir el diario
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    await scheduleNotificationForDiary({
+      ...newDiary,
+      date: tomorrow.toISOString(),
+    });
+
     navigation.goBack();
   };
 

@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ToastAndroid } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ListNavigationParamList } from "../navigation/ListDiaryNavigation";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import useUsersLoader from "../../user/hooks/store/useUsersLoader";
-import { ToastAndroid } from "react-native";
+import { DiaryUIWithID } from "../store/interfaces";
 
 type DiaryHeaderNavigationProp = StackNavigationProp<
   ListNavigationParamList,
@@ -13,40 +13,25 @@ type DiaryHeaderNavigationProp = StackNavigationProp<
 >;
 
 interface DiaryHeaderProps {
+  lastDiary: DiaryUIWithID | null;  // Ensure that lastDiary can be null
   navigation: DiaryHeaderNavigationProp;
 }
 
-const DiaryHeader: React.FC<DiaryHeaderProps> = ({ navigation }) => {
+const DiaryHeader: React.FC<DiaryHeaderProps> = ({ lastDiary, navigation }) => {
   const actualUser = FIREBASE_AUTH.currentUser;
   const moreInfoUser = useUsersLoader().find(
-    (user) => user.id === actualUser.uid
+    (user) => user.id === actualUser?.uid
   );
-  console.log(moreInfoUser);
 
   const handleNavigationAdd = () => {
-    const parsedUserDate = new Date(moreInfoUser.date);
     const actualDate = new Date();
+    const today = actualDate.toDateString();
 
-    const message = "Aún no es la hora de añadir un diario";
-    navigation.navigate("Añadir Diario");
-
-    // Compara las horas y los minutos
-    // Meter que si hay un diario con esta fecha no se pueda cambiar de pantalla
-    // VEr si no han pasado x tiempo del último diario que se ha creado a la hora que se ha establecido con el día de hoy
-    // if (
-    //   actualDate.getHours() > parsedUserDate.getHours() ||
-    //   (actualDate.getHours() === parsedUserDate.getHours() &&
-    //     actualDate.getMinutes() >= parsedUserDate.getMinutes())
-    // ) {
-    //   if (moreInfoUser.createDiary) {
-    //     navigation.navigate("Añadir Diario");
-    //   } else {
-    //     moreInfoUser.createDiary = true;
-    //     navigation.navigate("Añadir Diario");
-    //   }
-    // } else {
-    //   ToastAndroid.show(message, ToastAndroid.SHORT);
-    // }
+    if (lastDiary && new Date(lastDiary.date).toDateString() === today) {
+      ToastAndroid.show("Aún no es la hora de añadir un diario", ToastAndroid.SHORT);
+    } else {
+      navigation.navigate("Añadir Diario");
+    }
   };
 
   return (
@@ -74,6 +59,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "white",
   },
 });
 
