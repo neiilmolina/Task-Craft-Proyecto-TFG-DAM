@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Button, Image, StyleSheet, Animated } from "react-native";
 import { updateProfile } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import useImagePicker from "../hooks/ProfileMenu/useImagePicker";
 import useImageUpload from "../hooks/ProfileMenu/useImageUpload";
 import useMenuAnimation from "../hooks/ProfileMenu/useMenuAnimation";
-import MyButton from "../../../app/components/MyButton";
+import { FIREBASE_AUTH } from "../../../../FirebaseConfig";
+import MyButton from "../../../components/MyButton";
 
 const ProfileMenu = ({ image, setImage }) => {
   const actualUser = FIREBASE_AUTH.currentUser;
