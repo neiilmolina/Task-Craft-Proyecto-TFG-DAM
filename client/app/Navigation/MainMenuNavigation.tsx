@@ -2,14 +2,15 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import ListTaskNavigation from "../../modules/tasks/navigation/ListTaskNavigation";
-import SettingsNavigator from "../../modules/user/navigation/SettingsNavigation";
-import ListDiaryNavigation from "../../modules/diaries/navigation/ListDiaryNavigation";
-import CalendarTaskNavigation from "../../modules/tasks/navigation/CalendarTaskNavigation";
+import ListTaskNavigation from "../modules/tasks/navigation/ListTaskNavigation";
+import SettingsNavigator from "../modules/users/navigation/SettingsNavigation";
+import ListDiaryNavigation from "../modules/diaries/navigation/ListDiaryNavigation";
+import CalendarTaskNavigation from "../modules/tasks/navigation/CalendarTaskNavigation";
 
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
+  // Define la navegación mediante pestañas con BottomTabNavigator
   return (
     <Tab.Navigator
         initialRouteName="Tareas"
@@ -18,6 +19,7 @@ export default function MyTabs() {
           tabBarInactiveTintColor: 'gray',
         }}
     >
+      {/* Pestaña para listar tareas */}
       <Tab.Screen 
         name="Tareas" 
         component={ListTaskNavigation} 
@@ -28,6 +30,7 @@ export default function MyTabs() {
           ),
         }} 
       />
+      {/* Pestaña para la navegación de calendario */}
       <Tab.Screen
         name={"Navegación calendario"}
         component={CalendarTaskNavigation}
@@ -38,6 +41,7 @@ export default function MyTabs() {
           ),
         }} 
       />
+      {/* Pestaña para listar diarios */}
       <Tab.Screen 
         name="Diarios" 
         component={ListDiaryNavigation} 
@@ -48,6 +52,7 @@ export default function MyTabs() {
           ),
         }} 
       />
+      {/* Pestaña para los ajustes */}
       <Tab.Screen 
         name="Ajustes" 
         component={SettingsNavigator} 
